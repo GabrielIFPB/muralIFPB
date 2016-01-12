@@ -33,7 +33,7 @@ class Comment(models.Model):
 		return self.author
 
 class User(models.Model):
-	firstName = models.CharField(max_length=50)
+	firstName = models.CharField('First name', max_length=50, blank=False)
 	lastName = models.CharField(max_length=50)
 	email = models.EmailField()
 	#facebook = models.URLField()
