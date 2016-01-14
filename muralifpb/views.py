@@ -100,13 +100,18 @@ def search(request):
 
 def edit(request, id):
 	user = get_object_or_404(User, id=id)
+	initial = {
+		'firstName': user.firstName,
+		'lastName': user.lastName,
+		'email': user.email
+	}
 	if request.method == 'POST':
-		form = UserForm(request.POST, instance=user)
+		form = UserForm(request.POST)
 		if form.is_valid():
-			user = form.save()
+			user = form.save(user=user)
 			return HttpResponseRedirect(reverse('settings'))
 	else:
-		form = UserForm(instance=user)
+		form = UserForm(initial=initial)
 	return render(request, 'edit.html', 
 		{
 			'user': user,

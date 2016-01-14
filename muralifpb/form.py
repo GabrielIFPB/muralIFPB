@@ -4,7 +4,6 @@ from django import forms
 from muralifpb.models import User
 from muralifpb.models import Login
 
-"""
 class UserForm(forms.Form):
 	firstName = forms.CharField(label='First name', max_length=50)
 	lastName = forms.CharField(label='Last name', max_length=50)
@@ -39,7 +38,6 @@ class UserForm(forms.Form):
 		if User.objects.filter(firstName=firstName):
 			raise forms.ValidationError('log já cadastrado!')
 		return firstName
-"""
 
 class LoginForm(forms.Form):
 	login = forms.CharField(label='login', max_length=20)
@@ -51,7 +49,3 @@ class LoginForm(forms.Form):
 		if Login.objects.filter(login=login):
 			raise forms.ValidationError('Login existente')
 		return login
-
-class UserForm(forms.ModelForm):
-	class Meta:
-		model = User
