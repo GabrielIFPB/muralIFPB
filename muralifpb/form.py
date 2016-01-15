@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 from django import forms
+from django.contrib.auth import authenticate
 
 from muralifpb.models import User
 from muralifpb.models import Login
@@ -48,4 +49,7 @@ class LoginForm(forms.Form):
 
 		if Login.objects.filter(login=login):
 			raise forms.ValidationError('Login existente')
-		return login
+		return 
+
+class ClassName(object):
+	pass

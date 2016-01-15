@@ -51,4 +51,6 @@ class Login(models.Model):
 
 class UserProfile(models.Model):
 	user = models.OneToOneField(User, related_name='user_profile')
-	pass
+
+	def __unicode__(self):
+		return self.user.username
