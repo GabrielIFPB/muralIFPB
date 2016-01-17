@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User as UserAdmin
 
 class Contact(models.Model):
 	name = models.CharField(max_length=100)
@@ -43,14 +43,13 @@ class User(models.Model):
 		return '%s %s'(self.firstName, self.lastName)
 
 class Login(models.Model):
-	login = models.CharField(max_length=20)
+	userAdmin = models.OneToOneField(UserAdmin, related_name='user_profile')
+
+#	login = models.CharField(max_length=20)
 	passwd = models.CharField(max_length=40)
 
-	def __unicode__(self):
-		return self.login
-
-class UserProfile(models.Model):
-	user = models.OneToOneField(User, related_name='user_profile')
+#	def __unicode__(self):
+#		return self.login
 
 	def __unicode__(self):
-		return self.user.username
+		return self.userAdmin.username

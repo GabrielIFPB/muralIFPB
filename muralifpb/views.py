@@ -3,6 +3,8 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
+from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required, permission_required
 
 
 from muralifpb.models import User
@@ -40,26 +42,30 @@ def index(request):
 	else:
 		form = UserForm()
 
-	return render(request, 'index.html', 
-		{
-			'users': users,
-			'form': form
-		}
-	)
+	return render(request, 'index.html', {})
 
 def login(request):
-	log = Login.objects.all()
-
+	next = request.REQUEST.get('next', '/settings/')
 	if request.method == 'POST':
 		form = LoginForm(request.POST)
 		if form.is_valid():
-			login = form.save()
+			user = form.save()
+			login(request, user)
 			return HttpResponseRedirect(reverse('settings'))
 	else:
 		form = LoginForm()
 
-	return render(request, 'login.html', {})
+	return render(request, 'login.html', 
+		{
+			'form' : form,
+			'next' : next,
+		}
+	)
 
+def exit(request):
+	logout(request)
+	return HttpResponseRedirect(reverse('index'))
+	
 def settings(request):
 	return render(request, 'settings.html', {})
 
