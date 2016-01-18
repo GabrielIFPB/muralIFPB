@@ -51,14 +51,14 @@ class LoginForm(forms.Form):
 	passwd = forms.CharField(label='passwd', max_length=40)
 
 	def clean_login(self):
-		login = self.cleaned_data.get('username')
+		login = self.cleaned_data.get('login')
 
 		if not User.objects.filter(username=login):
 			raise forms.ValidationError('Login inexistente')
 		return login
 
 	def clean_passwd(self):
-		login = self.cleaned_data.get('username')
+		login = self.cleaned_data.get('login')
 		passwd = self.cleaned_data.get('password')
 
 		if not authenticate(username=login, password=passwd):
@@ -66,6 +66,6 @@ class LoginForm(forms.Form):
 		return passwd
 
 	def save(self):
-		login = self.cleaned_data.get('username')
+		login = self.cleaned_data.get('login')
 		passwd = self.cleaned_data.get('password')
 		return authenticate(username=login, password=passwd)

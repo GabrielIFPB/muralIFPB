@@ -46,7 +46,7 @@ class Login(models.Model):
 	userAdmin = models.OneToOneField(UserAdmin, related_name='user_profile')
 
 #	login = models.CharField(max_length=20)
-	passwd = models.CharField(max_length=40)
+#	passwd = models.CharField(max_length=40)
 
 #	def __unicode__(self):
 #		return self.login

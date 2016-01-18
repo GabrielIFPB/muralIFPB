@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required, permission_required
+from django.utils.decorators import method_decorator
 
 
 from muralifpb.models import User
@@ -32,20 +33,11 @@ def index(request):
 	return render(request, 'index.html', {'users': users})
 """
 def index(request):
-	users = User.objects.all()
-
-	if request.method == 'POST':
-		form = UserForm(request.POST)
-		if form.is_valid():
-			user = form.save()
-			return HttpResponseRedirect(reverse('index'))
-	else:
-		form = UserForm()
 
 	return render(request, 'index.html', {})
 
 def login(request):
-	next = request.REQUEST.get('next', '/settings/')
+	next = request.REQUEST.get('next', '../settings/')
 	if request.method == 'POST':
 		form = LoginForm(request.POST)
 		if form.is_valid():

@@ -19,8 +19,10 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    #url(r'^login/$', 'django.contrib.auth.views.login', name='login'),
+    #url(r'^logout/$', 'django.contrib.auth.views.logout'),
     url(r'^$', 'muralifpb.views.index', name='index'),
-    url(r'^login/$', 'muralifpb.views.login', name='login'),
+    url(r'^login/$', 'django.contrib.auth.views.login', name='login'),
     url(r'^settings/$', 'muralifpb.views.settings', name='settings'),
     url(r'^register/$', 'muralifpb.views.register', name='register'),
     url(r'^edit/$', 'muralifpb.views.search', name='search'),
