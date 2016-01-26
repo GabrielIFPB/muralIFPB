@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User as UserAdmin
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required, permission_required
 from django.utils.decorators import method_decorator
@@ -14,53 +15,30 @@ from muralifpb.models import Login
 from muralifpb.form import UserForm
 from muralifpb.form import LoginForm
 
-#def index(request):
-#	return HttpResponse("Olá mundo!")
-"""
 def index(request):
-	users = User.objects.all()
+	return render(request, 'index.html', { })
+
+def settings(request):
+	return render(request, 'settings.html', { })
+
+def register(request):
+	users = UserAdmin.objects.all()
 
 	if request.method == 'POST':
-		firstName = request.POST.get('first_name')
-		lastName = request.POST.get('last_name')
-		email = request.POST.get('email')
-
-		user = User(firstName=firstName, lastName=lastName, email=email)
-		user.save()
-
-		HttpResponseRedirect(reverse('index'))
-
-	return render(request, 'index.html', {'users': users})
-"""
-def index(request):
-
-	return render(request, 'index.html', {})
-
-def login(request):
-	next = request.REQUEST.get('next', '../settings/')
-	if request.method == 'POST':
-		form = LoginForm(request.POST)
+		form = UserForm(request.POST)
 		if form.is_valid():
 			user = form.save()
-			login(request, user)
-			return HttpResponseRedirect(reverse('settings'))
+			return HttpResponseRedirect(reverse('register'))
 	else:
-		form = LoginForm()
+		form = UserForm()
 
-	return render(request, 'login.html', 
+	return render(request, 'register.html', 
 		{
-			'form' : form,
-			'next' : next,
+			'users': users,
+			'form': form
 		}
 	)
-
-def exit(request):
-	logout(request)
-	return HttpResponseRedirect(reverse('index'))
-	
-def settings(request):
-	return render(request, 'settings.html', {})
-
+'''
 def register(request):
 	users = User.objects.all()
 
@@ -78,6 +56,7 @@ def register(request):
 			'form': form
 		}
 	)
+'''
 
 def search(request):
 	users = User.objects.all()
@@ -116,3 +95,46 @@ def edit(request, id):
 			'form': form
 		}
 	)
+
+#def index(request):
+#	return HttpResponse("Olá mundo!")
+"""
+def index(request):
+	users = User.objects.all()
+
+	if request.method == 'POST':
+		firstName = request.POST.get('first_name')
+		lastName = request.POST.get('last_name')
+		email = request.POST.get('email')
+
+		user = User(firstName=firstName, lastName=lastName, email=email)
+		user.save()
+
+		HttpResponseRedirect(reverse('index'))
+
+	return render(request, 'index.html', {'users': users})
+"""
+
+"""
+def login(request):
+	next = request.REQUEST.get('next', '../settings/')
+	if request.method == 'POST':
+		form = LoginForm(request.POST)
+		if form.is_valid():
+			user = form.save()
+			login(request, user)
+			return HttpResponseRedirect(reverse('settings'))
+	else:
+		form = LoginForm()
+
+	return render(request, 'login.html', 
+		{
+			'form' : form,
+			'next' : next,
+		}
+	)
+
+def exit(request):
+	logout(request)
+	return HttpResponseRedirect(reverse('index'))
+"""

@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.auth.models import User as UserAdmin
 from django.contrib.auth import authenticate
 
-from muralifpb.models import User
+#from muralifpb.models import User
 from muralifpb.models import Login
 
 ##class UserForm(forms.Form):
@@ -12,14 +12,17 @@ from muralifpb.models import Login
 ##	email = forms.EmailField(label='Email')
 class UserForm(forms.ModelForm):
 	class Meta:
-		model = User
-		fields = ['firstName']
+		model = UserAdmin
+		#exclude = []
+		fields = ['first_name', 'last_name', 'email', 'username', 'password']
 
-
+'''
 	def save(self, user=None):
 		firstName = self.cleaned_data.get('firstName')
 		lastName = self.cleaned_data.get('lastName')
 		email = self.cleaned_data.get('email')
+		login = self.cleaned_data.get('login')
+		passwd = self.cleaned_data.get('passwd')
 
 		if user:
 			user.firstName = firstName
@@ -35,16 +38,17 @@ class UserForm(forms.ModelForm):
 	def clean_email(self):
 		email = self.cleaned_data.get('email')
 
-		if User.objects.filter(email=email):
+		if UserAdmin.objects.filter(email=email):
 			raise forms.ValidationError('Email já cadastrado!')
 		return email
 
 	def clean_firstName(self):
 		firstName = self.cleaned_data.get('firstName')
 
-		if User.objects.filter(firstName=firstName):
+		if UserAdmin.objects.filter(firstName=firstName):
 			raise forms.ValidationError('log já cadastrado!')
 		return firstName
+'''
 
 class LoginForm(forms.Form):
 	login = forms.CharField(label='login', max_length=20)
