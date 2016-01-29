@@ -33,18 +33,20 @@ class Comment(models.Model):
 	def __unicode__(self):
 		return self.author
 
-class User(models.Model):
-	matricula = models.CharField(max_length=50)
-	full_name = models.CharField(max_length=200)
-	email = models.EmailField()
-	login = models.CharField(max_length=30)
-	passwd = models.CharField(max_length=30)
-
+class UserProfile(models.Model):
+	user = models.OneToOneField(UserAdmin, related_name='user_profile')
+	matricula = models.CharField(max_length=30)
 	def __unicode__(self):
-		return '%s %s'(self.matricula, self.full_name)
+		return '%s %s'(self.matricula, self.user.username)
 
-class Login(models.Model):
-	userAdmin = models.OneToOneField(UserAdmin, related_name='user_profile')
+#class Login(models.Model):
+	#userAdmin = models.OneToOneField(UserAdmin, related_name='user_profile')
 
-	def __unicode__(self):
-		return self.userAdmin.username
+#	login = models.CharField(max_length=20)
+#	passwd = models.CharField(max_length=40)
+
+#	def __unicode__(self):
+#		return self.login
+
+	#def __unicode__(self):
+	#	return self.userAdmin.username

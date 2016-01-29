@@ -9,11 +9,11 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.utils.decorators import method_decorator
 
 
-from muralifpb.models import User
-from muralifpb.models import Login
+from muralifpb.models import UserProfile
+#from muralifpb.models import Login
 
 from muralifpb.form import UserForm
-from muralifpb.form import LoginForm
+#from muralifpb.form import LoginForm
 
 def index(request):
 	return render(request, 'index.html', { })
@@ -21,6 +21,24 @@ def index(request):
 def settings(request):
 	return render(request, 'settings.html', { })
 
+def register(request):
+	users = UserProfile.objects.all()
+
+	if request.method == 'POST':
+		form = UserForm(request.POST)
+		if form.is_valid():
+			user = form.save()
+			return HttpResponseRedirect(reverse('register'))
+	else:
+		form = UserForm()
+
+	return render(request, 'register.html', 
+		{
+			'users': users,
+			'form': form
+		}
+	)
+'''
 def register(request):
 	users = User.objects.all()
 
@@ -38,9 +56,10 @@ def register(request):
 			'form': form
 		}
 	)
+'''
 
 def search(request):
-	users = User.objects.all()
+	users = UserProfile.objects.all()
 	if request.method == 'POST':
 		form = UserForm(request.POST)
 		if form.is_valid():
@@ -57,15 +76,19 @@ def search(request):
 	)
 
 def edit(request, id):
-	user = get_object_or_404(User, id=id)
-
+	user = get_object_or_404(UserProfile, id=id)
+	initial = {
+		'firstName': user.firstName,
+		'lastName': user.lastName,
+		'email': user.email
+	}
 	if request.method == 'POST':
-		form = UserForm(request.POST, instance=user)
+		form = UserForm(request.POST)
 		if form.is_valid():
 			user = form.save(user=user)
 			return HttpResponseRedirect(reverse('settings'))
 	else:
-		form = UserForm(instance=user)
+		form = UserForm(initial=initial)
 	return render(request, 'edit.html', 
 		{
 			'user': user,
@@ -90,8 +113,28 @@ def index(request):
 		HttpResponseRedirect(reverse('index'))
 
 	return render(request, 'index.html', {'users': users})
+"""
+
+"""
+def login(request):
+	next = request.REQUEST.get('next', '../settings/')
+	if request.method == 'POST':
+		form = LoginForm(request.POST)
+		if form.is_valid():
+			user = form.save()
+			login(request, user)
+			return HttpResponseRedirect(reverse('settings'))
+	else:
+		form = LoginForm()
+
+	return render(request, 'login.html', 
+		{
+			'form' : form,
+			'next' : next,
+		}
+	)
+"""
 
 def exit(request):
 	logout(request)
 	return HttpResponseRedirect(reverse('index'))
-"""

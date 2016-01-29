@@ -1,4 +1,3 @@
-#!/bin/bash
 # -*- coding: UTF-8 -*-
 """
 Django settings for website project.
@@ -116,3 +115,5 @@ LOGIN_URL = '/login/'
 LOGOUT_URL = '/exit/'
 
 LOGIN_REDIRECT_URL = '/'
+
+AUTH_PROFILE_MODULE = 'muralifpb.UserProfile'
