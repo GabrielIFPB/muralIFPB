@@ -1,3 +1,4 @@
+#!/bin/bash
 # -*- coding: UTF-8 -*-
 """
 Django settings for website project.

@@ -34,22 +34,17 @@ class Comment(models.Model):
 		return self.author
 
 class User(models.Model):
-	firstName = models.CharField(max_length=50)
-	lastName = models.CharField(max_length=50)
+	matricula = models.CharField(max_length=50)
+	full_name = models.CharField(max_length=200)
 	email = models.EmailField()
-	#facebook = models.URLField()
+	login = models.CharField(max_length=30)
+	passwd = models.CharField(max_length=30)
 
 	def __unicode__(self):
-		return '%s %s'(self.firstName, self.lastName)
+		return '%s %s'(self.matricula, self.full_name)
 
 class Login(models.Model):
 	userAdmin = models.OneToOneField(UserAdmin, related_name='user_profile')
-
-#	login = models.CharField(max_length=20)
-#	passwd = models.CharField(max_length=40)
-
-#	def __unicode__(self):
-#		return self.login
 
 	def __unicode__(self):
 		return self.userAdmin.username

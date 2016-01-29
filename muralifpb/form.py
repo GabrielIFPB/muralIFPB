@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.auth.models import User as UserAdmin
 from django.contrib.auth import authenticate
 
-#from muralifpb.models import User
+from muralifpb.models import User
 from muralifpb.models import Login
 
 ##class UserForm(forms.Form):
@@ -11,44 +11,63 @@ from muralifpb.models import Login
 ##	lastName = forms.CharField(label='Last name', max_length=50)
 ##	email = forms.EmailField(label='Email')
 class UserForm(forms.ModelForm):
+	matricula = forms.CharField(label='Matrícula')
+	full_name = forms.CharField(label='Nome Completo')
+	passwd = forms.CharField(label='Password', widget=forms.PasswordInput)
+	email = forms.CharField(widget=forms.EmailInput)
 	class Meta:
-		model = UserAdmin
-		#exclude = []
-		fields = ['first_name', 'last_name', 'email', 'username', 'password']
+		model = User
+		exclude = []
+		#fields = [
+		#			'matricula', 'full_name', 
+		#			'email',     'login',   
+		#			'passwd',
+		#		]
 
-'''
+
 	def save(self, user=None):
-		firstName = self.cleaned_data.get('firstName')
-		lastName = self.cleaned_data.get('lastName')
+		matricula = self.cleaned_data.get('matricula')
+		full_name = self.cleaned_data.get('full_name')
 		email = self.cleaned_data.get('email')
 		login = self.cleaned_data.get('login')
 		passwd = self.cleaned_data.get('passwd')
 
 		if user:
-			user.firstName = firstName
-			user.lastName = lastName
+			user.matricula = matricula
+			user.full_name = full_name
 			user.email = email
+			user.login = login
+			user.passwd = passwd
 			user.save()
 			return user
 
-		user = User(firstName=firstName, lastName=lastName, email=email)
+		user = User(matricula=matricula, full_name=full_name, email=email,
+					login=login, passwd=passwd
+				)
 		user.save()
 		return user
 
 	def clean_email(self):
 		email = self.cleaned_data.get('email')
 
-		if UserAdmin.objects.filter(email=email):
-			raise forms.ValidationError('Email já cadastrado!')
+		if User.objects.filter(email=email):
+			raise forms.ValidationError(_('Email já cadastrado!'))
 		return email
 
-	def clean_firstName(self):
-		firstName = self.cleaned_data.get('firstName')
+	def clean_matricula(self):
+		matricula = self.cleaned_data.get('matricula')
 
-		if UserAdmin.objects.filter(firstName=firstName):
-			raise forms.ValidationError('log já cadastrado!')
-		return firstName
-'''
+		if User.objects.filter(matricula=matricula):
+			raise forms.ValidationError(_('matricula já cadastrado!'))
+		return matricula
+
+	def clean_login(self):
+		login = self.cleaned_data.get('login')
+
+		if User.objects.filter(login=login):
+			raise forms.ValidationError(_('login já cadastrado!'))
+		return login
+
 
 class LoginForm(forms.Form):
 	login = forms.CharField(label='login', max_length=20)
