@@ -14,7 +14,7 @@
 	<h3>Lista de Users</h3>
 	{% if users %}
 		{% for user in users %}
-			<p>{{ user.firstName }} {{ user.lastName }}</p>
+			<p>{{ user.first_name }} {{ user.last_name }}</p>
 		{% endfor %}
 	{% else %}
 		<p>not list!</p>
