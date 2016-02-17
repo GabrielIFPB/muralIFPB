@@ -7,9 +7,11 @@ from django.contrib.auth.models import User as UserAdmin
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required, permission_required
 from django.utils.decorators import method_decorator
-from django.forms.models import inlineformset_factory
+from django.contrib.auth.forms import UserCreationForm
 
 from muralifpb.form import UserForm
+from muralifpb.models import UserStudent
+from muralifpb.form import user_inline
 
 def index(request):
 	return render(request, 'index.html', { })
@@ -18,12 +20,10 @@ def settings(request):
 	return render(request, 'settings.html', { })
 
 def register(request):
-
-	user_inline = inlineformset_factory(UserStudent, UserAdmin, UserForm)
 	users = UserStudent.objects.all()
 
 	if request.method == 'POST':
-		form = UserStudent(request.POST)
+		form = UserForm(request.POST)
 		if form.is_valid():
 			user = form.save()
 			return HttpResponseRedirect(reverse('register'))
@@ -32,8 +32,8 @@ def register(request):
 
 	return render(request, 'register.html', 
 		{
-			'users': users,
-			'form': form
+			'users': UserCreationForm(),
+			'form': user_inline(),
 		}
 	)
 """

@@ -1,19 +1,29 @@
 # -*- coding: UTF-8 -*-
 from django import forms
-#from django.contrib.auth.models import User
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm
+from django.forms.models import inlineformset_factory
 
 from muralifpb.models import UserStudent
 
-class UserForm(UserCreationForm):
+user_inline = inlineformset_factory(User, UserStudent,  exclude=[])
+
+class UserForm(forms.Form):
 
 	password = forms.CharField(widget=forms.PasswordInput)
 
 	class Meta:
 		model = UserStudent
-		#exclude = []
-		fields = [u'first_name', u'last_name', u'email', u'username', u'password']
+		exclude = []
+		#fields = [u'first_name', u'last_name', u'email', u'username', u'password']
+
+	def clean_username(self):
+		username = self.cleaned_data.get(u'username')
+
+		if User.objects.filter(username=username):
+			raise forms.ValidationError(u'existente')
+		return username
 
 
 class LoginForm(forms.Form):

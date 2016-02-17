@@ -38,7 +38,7 @@ class UserStudent(models.Model):
 	user = models.OneToOneField(
 		User,
 		verbose_name=u'Usuário',
-#		related_name=u'Usuários',
+		related_name=u'Usuarios',
 		unique=True
 	)
 
@@ -46,6 +46,8 @@ class UserStudent(models.Model):
 		max_length=10,
 		unique=True
 	)
+
+	email = models.EmailField(max_length=200)
 
 	def __unicode__(self):
 		return self.matricula
