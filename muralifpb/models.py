@@ -47,7 +47,10 @@ class UserStudent(models.Model):
 		unique=True
 	)
 
-	email = models.EmailField(max_length=200)
-
+	email = models.EmailField(
+		max_length=200,
+		unique=True
+	)
+	
 	def __unicode__(self):
-		return self.matricula
+		return  self.matricula

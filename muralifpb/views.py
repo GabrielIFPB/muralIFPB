@@ -32,8 +32,8 @@ def register(request):
 
 	return render(request, 'register.html', 
 		{
-			'users': UserCreationForm(),
-			'form': user_inline(),
+			'users': UserCreationForm,
+			'form': user_inline,
 		}
 	)
 """

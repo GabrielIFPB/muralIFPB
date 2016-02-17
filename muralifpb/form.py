@@ -15,7 +15,7 @@ class UserForm(forms.Form):
 
 	class Meta:
 		model = UserStudent
-		exclude = []
+		#exclude = []
 		#fields = [u'first_name', u'last_name', u'email', u'username', u'password']
 
 	def clean_username(self):
@@ -24,6 +24,20 @@ class UserForm(forms.Form):
 		if User.objects.filter(username=username):
 			raise forms.ValidationError(u'existente')
 		return username
+
+	def clean_email(self):
+		email = self.cleaned_data.get('email')
+
+		if User.objects.filter(email=email):
+			raise forms.ValidationError('Email já cadastrado!')
+		return email
+
+	def clean_firstName(self):
+		firstName = self.cleaned_data.get('firstName')
+
+		if User.objects.filter(firstName=firstName):
+			raise forms.ValidationError('log já cadastrado!')
+		return firstName
 
 
 class LoginForm(forms.Form):
