@@ -3,68 +3,24 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
-
-
-from muralifpb.models import User
-from muralifpb.models import Login
+from django.contrib.auth.models import User as UserAdmin
+from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required, permission_required
+from django.utils.decorators import method_decorator
+from django.contrib.auth.forms import UserCreationForm
 
 from muralifpb.form import UserForm
-from muralifpb.form import LoginForm
+from muralifpb.models import UserStudent
+from muralifpb.form import user_inline
 
-#def index(request):
-#	return HttpResponse("Olá mundo!")
-"""
 def index(request):
-	users = User.objects.all()
-
-	if request.method == 'POST':
-		firstName = request.POST.get('first_name')
-		lastName = request.POST.get('last_name')
-		email = request.POST.get('email')
-
-		user = User(firstName=firstName, lastName=lastName, email=email)
-		user.save()
-
-		HttpResponseRedirect(reverse('index'))
-
-	return render(request, 'index.html', {'users': users})
-"""
-def index(request):
-	users = User.objects.all()
-
-	if request.method == 'POST':
-		form = UserForm(request.POST)
-		if form.is_valid():
-			user = form.save()
-			return HttpResponseRedirect(reverse('index'))
-	else:
-		form = UserForm()
-
-	return render(request, 'index.html', 
-		{
-			'users': users,
-			'form': form
-		}
-	)
-
-def login(request):
-	log = Login.objects.all()
-
-	if request.method == 'POST':
-		form = LoginForm(request.POST)
-		if form.is_valid():
-			login = form.save()
-			return HttpResponseRedirect(reverse('settings'))
-	else:
-		form = LoginForm()
-
-	return render(request, 'login.html', {})
+	return render(request, 'index.html', { })
 
 def settings(request):
-	return render(request, 'settings.html', {})
+	return render(request, 'settings.html', { })
 
 def register(request):
-	users = User.objects.all()
+	users = UserStudent.objects.all()
 
 	if request.method == 'POST':
 		form = UserForm(request.POST)
@@ -76,13 +32,13 @@ def register(request):
 
 	return render(request, 'register.html', 
 		{
-			'users': users,
-			'form': form
+			'users': UserCreationForm(),
+			'form': user_inline(),
 		}
 	)
-
+"""
 def search(request):
-	users = User.objects.all()
+	users = UserAdmin.objects.all()
 	if request.method == 'POST':
 		form = UserForm(request.POST)
 		if form.is_valid():
@@ -99,11 +55,13 @@ def search(request):
 	)
 
 def edit(request, id):
-	user = get_object_or_404(User, id=id)
+	user = get_object_or_404(UserAdmin, id=id)
 	initial = {
-		'firstName': user.firstName,
-		'lastName': user.lastName,
-		'email': user.email
+		'first_name' : user.first_name,
+		'last_name'  : user.last_name,
+		'email'      : user.email,
+		'username'   : user.username,
+		'password'   : user.password
 	}
 	if request.method == 'POST':
 		form = UserForm(request.POST)
@@ -118,3 +76,6 @@ def edit(request, id):
 			'form': form
 		}
 	)
+"""
+def exit(request):
+	logout(request)

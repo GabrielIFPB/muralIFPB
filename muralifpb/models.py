@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 from django.db import models
+from django.contrib.auth.models import User
 
 class Contact(models.Model):
 	name = models.CharField(max_length=100)
@@ -32,18 +33,21 @@ class Comment(models.Model):
 	def __unicode__(self):
 		return self.author
 
-class User(models.Model):
-	firstName = models.CharField(max_length=50)
-	lastName = models.CharField(max_length=50)
-	email = models.EmailField()
-	#facebook = models.URLField()
+class UserStudent(models.Model):
+
+	user = models.OneToOneField(
+		User,
+		verbose_name=u'Usuário',
+		related_name=u'Usuarios',
+		unique=True
+	)
+
+	matricula = models.CharField(
+		max_length=10,
+		unique=True
+	)
+
+	email = models.EmailField(max_length=200)
 
 	def __unicode__(self):
-		return '%s %s'(self.firstName, self.lastName)
-
-class Login(models.Model):
-	login = models.CharField(max_length=20)
-	passwd = models.CharField(max_length=40)
-
-	def __unicode__(self):
-		return self.login
+		return self.matricula
