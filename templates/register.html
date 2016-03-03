@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}IFPB register{% endblock %}
+
+{% block content %}
+	<h3>register</h3>
+	<a href="/settings">Back to settings</a>
+
+	<form action="." method="POST" >{% csrf_token %}
+		{{ form.as_p }}
+		{{ users.as_p }}
+		<input type="submit" />
+	</form>
+	
+{% endblock %}
