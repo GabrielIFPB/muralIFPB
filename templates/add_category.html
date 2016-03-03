@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
-{% block title %}IFPB news - ADD Category {% endblock %}
+{% block title %}IFPB news - Adicionar Categoria {% endblock %}
 
-{% block content %}a
+{% block content %}
 	<h2>Categoria</h2>
 	<form action="." method="POST" >{% csrf_token %}
 		{{ form.as_p }}

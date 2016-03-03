@@ -2,24 +2,17 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
-<<<<<<< HEAD
 from django.conf import settings
-=======
->>>>>>> bc8738dda0721983b8b34c685e243768f58c49f0
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-<<<<<<< HEAD
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-=======
->>>>>>> bc8738dda0721983b8b34c685e243768f58c49f0
     ]
 
     operations = [
         migrations.CreateModel(
-<<<<<<< HEAD
             name='Category',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
@@ -92,15 +85,5 @@ class Migration(migrations.Migration):
             model_name='news',
             name='font',
             field=models.ForeignKey(verbose_name='Fonte da not\xedcia', to='muralifpb.NewsPortals'),
-=======
-            name='Contact',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('name', models.CharField(max_length=100)),
-                ('email', models.EmailField(max_length=254)),
-                ('facebook', models.URLField()),
-                ('birth', models.DateField()),
-            ],
->>>>>>> bc8738dda0721983b8b34c685e243768f58c49f0
         ),
     ]

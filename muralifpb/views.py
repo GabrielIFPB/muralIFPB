@@ -9,7 +9,6 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.utils.decorators import method_decorator
 from django.contrib.auth.forms import UserCreationForm
 
-<<<<<<< HEAD
 from muralifpb.models import UserStudent
 from muralifpb.form import user_inline
 
@@ -23,38 +22,18 @@ from muralifpb.form import NewsPortalsForm
 def index(request):
 	return render(request, 'index.html', { })
 
-=======
-from muralifpb.form import UserForm
-from muralifpb.models import UserStudent
-from muralifpb.form import user_inline
-
-def index(request):
-	return render(request, 'index.html', { })
-
-def settings(request):
-	return render(request, 'settings.html', { })
-
->>>>>>> bc8738dda0721983b8b34c685e243768f58c49f0
 def register(request):
 	users = UserStudent.objects.all()
 
 	if request.method == 'POST':
-<<<<<<< HEAD
 		form = user_inline(request.POST)
 		user_form = UserCreationForm(request.POST)
-=======
-		form = UserForm(request.POST)
->>>>>>> bc8738dda0721983b8b34c685e243768f58c49f0
 		if form.is_valid():
 			user = form.save()
 			return HttpResponseRedirect(reverse('register'))
 	else:
-<<<<<<< HEAD
 		form = user_inline()
 		user_form = UserCreationForm()
-=======
-		form = UserForm()
->>>>>>> bc8738dda0721983b8b34c685e243768f58c49f0
 
 	return render(request, 'register.html', 
 		{
@@ -62,7 +41,6 @@ def register(request):
 			'form': user_inline,
 		}
 	)
-<<<<<<< HEAD
 
 def add_category(request):
 	category = Category.objects.all()
@@ -117,48 +95,3 @@ def add_portal(request):
 
 def exit(request):
 	logout(request)
-=======
-"""
-def search(request):
-	users = UserAdmin.objects.all()
-	if request.method == 'POST':
-		form = UserForm(request.POST)
-		if form.is_valid():
-			user = form.save()
-			return HttpResponseRedirect(reverse('search'))
-	else:
-		form = UserForm()
-
-	return render(request, 'search.html', 
-		{
-			'users': users,
-			'form': form
-		}
-	)
-
-def edit(request, id):
-	user = get_object_or_404(UserAdmin, id=id)
-	initial = {
-		'first_name' : user.first_name,
-		'last_name'  : user.last_name,
-		'email'      : user.email,
-		'username'   : user.username,
-		'password'   : user.password
-	}
-	if request.method == 'POST':
-		form = UserForm(request.POST)
-		if form.is_valid():
-			user = form.save(user=user)
-			return HttpResponseRedirect(reverse('settings'))
-	else:
-		form = UserForm(initial=initial)
-	return render(request, 'edit.html', 
-		{
-			'user': user,
-			'form': form
-		}
-	)
-"""
-def exit(request):
-	logout(request)
->>>>>>> bc8738dda0721983b8b34c685e243768f58c49f0

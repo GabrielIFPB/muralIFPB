@@ -24,14 +24,9 @@ urlpatterns = [
 	url(r'^exit/$', 'django.contrib.auth.views.logout', name='index'),
 	url(r'^settings/$', 'muralifpb.views.settings', name='settings'),
 	url(r'^register/$', 'muralifpb.views.register', name='register'),
-<<<<<<< HEAD
 	#url(r'^edit/$', 'muralifpb.views.search', name='search'),
 	#url(r'^edit/(?P<id>\d+)/$', 'muralifpb.views.edit', name='edit_id'),
 	url(r'^addcategory/$', 'muralifpb.views.add_category', name='addcategory'),
 	url(r'^addpost/$', 'muralifpb.views.add_post', name='addpost'),
 	url(r'^addportal/$', 'muralifpb.views.add_portal', name='addportal'),
-=======
-	url(r'^edit/$', 'muralifpb.views.search', name='search'),
-	url(r'^edit/(?P<id>\d+)/$', 'muralifpb.views.edit', name='edit_id'),
->>>>>>> bc8738dda0721983b8b34c685e243768f58c49f0
 ]

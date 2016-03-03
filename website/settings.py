@@ -119,12 +119,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 LOGIN_URL = '/login/'
 LOGOUT_URL = '/exit/'
 
-<<<<<<< HEAD
 LOGIN_REDIRECT_URL = '/'
 
 STATICFILES_DIRS = (
    ('muralifpb', os.path.join(BASE_DIR, 'templates/static')),
 )
-=======
-LOGIN_REDIRECT_URL = '/'
->>>>>>> bc8738dda0721983b8b34c685e243768f58c49f0
