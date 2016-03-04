@@ -3,9 +3,24 @@
 {% block title %}IFPB news - Adicionar Categoria {% endblock %}
 
 {% block content %}
+
 	<h2>Categoria</h2>
+	
 	<form action="." method="POST" >{% csrf_token %}
 		{{ form.as_p }}
 		<input type="submit" />
 	</form>
+
+	<hr>
+
+	<h3>Lista de Categorias </h3>
+
+	{% if categories %}
+		{% for category in categories %}
+			<a href="/edit_category/{{ category.id }}"><p>{{ category.name }} {{ category.published }}</p>
+		{% endfor %}
+	{% else %}
+		<p>not list!</p>
+	{% endif %}
+
 {% endblock %}

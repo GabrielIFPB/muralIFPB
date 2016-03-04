@@ -1,5 +1,5 @@
 # -*- coding: UTF-8 -*-
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
@@ -26,14 +26,15 @@ def register(request):
 	users = UserStudent.objects.all()
 
 	if request.method == 'POST':
-		form = user_inline(request.POST)
-		user_form = UserCreationForm(request.POST)
+		user_form = user_inline(request.POST)
+		user_django = UserCreationForm(request.POST)
 		if form.is_valid():
-			user = form.save()
+			user = user_form.save()
+			django = user_django.save()
 			return HttpResponseRedirect(reverse('register'))
 	else:
-		form = user_inline()
-		user_form = UserCreationForm()
+		user_form = user_inline()
+		user_django = UserCreationForm()
 
 	return render(request, 'register.html', 
 		{
@@ -43,18 +44,19 @@ def register(request):
 	)
 
 def add_category(request):
-	category = Category.objects.all()
+	categories = Category.objects.all()
 
 	if request.method == 'POST':
 		form = CategoryForm(request.POST)
 		if form.is_valid():
 			category = form.save()
-			return HttpResponseRedirect(reverse('addcategory'))
+			return HttpResponseRedirect(reverse('add_category'))
 	else:
 		form = CategoryForm()
 
 	return render(request, 'add_category.html', 
 		{
+			'categories': categories,
 			'form': form,
 		}
 	)
@@ -66,12 +68,13 @@ def add_post(request):
 		form = PostForm(request.POST)
 		if form.is_valid():
 			post = form.save()
-			return HttpResponseRedirect(reverse('addpost'))
+			return HttpResponseRedirect(reverse('add_post'))
 	else:
 		form = PostForm()
 
 	return render(request, 'add_post.html',
 		{
+
 			'form': form,
 		}
 	)
@@ -83,15 +86,65 @@ def add_portal(request):
 		form = NewsPortalsForm(request.POST)
 		if form.is_valid():
 			portal = form.save()
-			return HttpResponseRedirect(reverse('addportal'))
+			return HttpResponseRedirect(reverse('add_portal'))
 	else:
 		form = NewsPortalsForm()
 
 	return render(request, 'add_portal.html',
 		{
+			'portals': portals,
 			'form': form,
 		}
 	)
+
+def edit_category(request, id):
+	category = get_object_or_404(Category, id=id)
+
+	initial = {
+		'name': category.name,
+		'published': category.published,
+	}
+
+	if request.method == 'POST':
+		form = CategoryForm(request.POST)
+		if form.is_valid():
+			category = form.save(category=category)
+			return HttpResponseRedirect(reverse('edit_category'))
+	else:
+		form = CategoryForm(initial=initial)
+
+	return render(request, 'edit_category.html', 
+		{
+			'category': category,
+			'form': form,
+		}
+	)
+
+def edit_post(request, id):
+	post = get_object_or_404(Post, id=id)
+
+	initial = {
+		'title': post.title,
+		'text' : post.text,
+		'category': post.category,
+		'published': post.published,
+	}
+
+	if request.method == 'POST':
+		form = PostForm(request.POST)
+		if form.is_valid():
+			post = form.save(post=post)
+			return HttpResponseRedirect(reverse('edit_post'))
+	else:
+		form = PostForm(initial=initial)
+
+	return render(request, 'edit_post.html',
+		{
+			'post': post,
+			'form': form,
+		}
+	)
+
 
 def exit(request):
 	logout(request)

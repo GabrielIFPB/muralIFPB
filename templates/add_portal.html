@@ -3,9 +3,23 @@
 {% block title %}IFPB news - Adicionar Postais de Notíciais{% endblock %}
 
 {% block content %}
+
 	<h2>Portal</h2>
+
 	<form action="." method="POST" >{% csrf_token %}
 		{{ form.as_p }}
 		<input type="submit" />
 	</form>
+
+	<hr>
+
+	<h3>Lista de Postais de Notíciais </h3>
+
+	{% if portals %}
+		{% for portal in portals %}
+			<p>{{ portal.name }} {{ portal.link }}</p>
+		{% endfor %}
+	{% else %}
+		<p>not list!</p>
+	{% endif %}
 {% endblock %}

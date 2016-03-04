@@ -41,6 +41,14 @@ class CategoryForm(forms.ModelForm):
 	class Meta:
 		model = Category
 		exclude = []
+	
+	def clean_name(self):
+		name = self.cleaned_data.get(u'name')
+
+		if Category.objects.filter(name=name):
+			raise forms.ValidationError(u'Categoria existente!')
+		return name
+	
 
 class PostForm(forms.ModelForm):
 
@@ -52,4 +60,18 @@ class NewsPortalsForm(forms.ModelForm):
 
 	class Meta:
 		model = NewsPortals
-		exclude = []			
+		exclude = []
+
+	def clean_name(self):
+		name = self.cleaned_data.get(u'name')
+
+		if NewsPortals.objects.filter(name=name):
+			raise forms.ValidationError(u'Já existe um portal com esse nome!')
+		return name
+
+	def clean_link(self):
+		link = self.cleaned_data.get(u'link')
+
+		if NewsPortals.objects.filter(link=link):
+			raise forms.ValidationError(u'Esse link já existe!')
+		return link
