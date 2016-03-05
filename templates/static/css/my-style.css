@@ -48,12 +48,12 @@ a{
 	height:40px;
 	float:left;
 	margin:2px 2px 0 10px;
-	background:url(img/logo-conexao-map.png) no-repeat center;
+	background:url('../img/logo-conexao-map.png') no-repeat center;
 	cursor:pointer;
 }
 
 #logo-if:hover{
-	background:url(img/logo-conexao-map-hover.png) no-repeat center;
+	background:url('../img/logo-conexao-map-hover.png') no-repeat center;
 }
 
 #logo-if a{
@@ -88,13 +88,13 @@ a{
 	margin:2px 0 0 0;
 	padding:0 0 0 2px;
 	cursor: pointer;
-	background:url(img/search-submit_cinza.png) no-repeat center;
+	background:url('../img/search-submit_cinza.png') no-repeat center;
 	border:none;
 	border-left:1px solid #bbb;
 }
 
 .btn_search:hover{
-	background:url(img/search-submit.png) no-repeat center;
+	background:url('../img/search-submit.png') no-repeat center;
 }
 
 /*--------------------*/

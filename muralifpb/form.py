@@ -5,6 +5,8 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.forms.models import inlineformset_factory
 
+from django.utils.translation import ugettext_lazy as _
+
 from muralifpb.models import UserStudent
 from muralifpb.models import Category
 from muralifpb.models import Post
@@ -41,6 +43,17 @@ class CategoryForm(forms.ModelForm):
 	class Meta:
 		model = Category
 		exclude = []
+		label = {
+            'name': _('Writer'),
+        }
+        help_texts = {
+            'name': _('Some useful help text.'),
+        }
+        error_messages = {
+            'name': {
+                'max_length': _("This writer's name is too long."),
+            },
+        }
 	
 	def clean_name(self):
 		name = self.cleaned_data.get(u'name')

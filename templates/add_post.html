@@ -17,7 +17,7 @@
 
 	{% if posts %}
 		{% for post in posts %}
-			<p>{{ post.category.name }}{{ post.title }} {{ post.text }} {{ post.created_on }} {{ post.updated_on }} {{ post.published }}</p>
+			<p>{{ post.id }}{{ post.category.name }} {{ post.author.user.username }} {{ post.title }} {{ post.text }} {{ post.created_on }} {{ post.updated_on }} {{ post.published }}</p>
 		{% endfor %}
 	{% else %}
 		<p>not list!</p>

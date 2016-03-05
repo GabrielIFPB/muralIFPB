@@ -17,7 +17,7 @@
 
 	{% if portals %}
 		{% for portal in portals %}
-			<p>{{ portal.name }} {{ portal.link }}</p>
+			<p>{{ portal.id }}{{ portal.name }} {{ portal.link }}</p>
 		{% endfor %}
 	{% else %}
 		<p>not list!</p>

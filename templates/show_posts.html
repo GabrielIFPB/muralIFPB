@@ -1,0 +1,8 @@
+<hr>
+	{% if posts %}
+		{% for post in posts %}
+			<p>{{ post.title }} {{ post.text }}</p>
+		{% endfor %}
+	{% else %}
+		<p>not list!</p>
+	{% endif %}

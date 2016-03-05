@@ -17,7 +17,7 @@
 
 	{% if categories %}
 		{% for category in categories %}
-			<a href="/edit_category/{{ category.id }}"><p>{{ category.name }} {{ category.published }}</p>
+			<a href="/edit_category/{{ category.id }}"><p>{{ category.id }} {{ category.name }} {{ category.published }}</p>
 		{% endfor %}
 	{% else %}
 		<p>not list!</p>

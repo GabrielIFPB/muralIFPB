@@ -1,0 +1,8 @@
+<hr>
+	{% if news %}
+		{% for news in news %}
+			{{ news }}	
+		{% endfor %}
+	{% else %}
+		<p>not list!</p>
+	{% endif %}

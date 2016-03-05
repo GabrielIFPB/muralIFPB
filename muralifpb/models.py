@@ -9,11 +9,15 @@ class UserStudent(models.Model):
 			verbose_name='Matricula',
 			max_length=30,
 			unique=True,
+			null=False,
+			blank=False,
 		)
 	email = models.EmailField(
 			verbose_name='Email',
 			max_length=200,
 			unique=True,
+			null=False,
+			blank=False,
 		)
 	user = models.OneToOneField(
 			User,
@@ -35,6 +39,8 @@ class Category(models.Model):
 	name = models.CharField(
 			u'Nome',
 			max_length=100,
+			null=False,
+			blank=False,
 		)
 	published = models.BooleanField(
 			u'Publicado',
@@ -53,6 +59,16 @@ class Category(models.Model):
 	def __unicode__(self):
 		return self.name
 
+class PublishedManager(models.Manager):
+
+	def get_query_set(self):
+		return super(PublishedManager, self).get_query_set().filter(published=True)
+
+class UnpublishedManager(models.Manager):
+
+	def get_query_set(self):
+		return super(UnpublishedManager, self).get_query_set().filter(published=False)
+
 class Post(models.Model):
 
 	class Meta:
@@ -63,16 +79,22 @@ class Post(models.Model):
 		#ordena do mais antigo para o mais novo
 		#ordering = [u'-created_on']
 
-	user = models.ForeignKey(
+	author = models.ForeignKey(
 			UserStudent,
 			verbose_name=u'Postado por',
+			null=True,
+			blank=True,
 		)
 	title = models.CharField(
 			u'Título',
 			max_length=100,
+			null=False,
+			blank=False,
 		)
 	text = models.TextField(
 			u'Texto',
+			null=False,
+			blank=False,
 		)
 	category = models.ForeignKey(
 			Category,
@@ -93,6 +115,10 @@ class Post(models.Model):
 			auto_now=True,
 		)
 
+	objects = models.Manager()
+	published_objects = PublishedManager()
+	unpublished_objects = UnpublishedManager()
+
 	def __unicode__(self):
 		return self.title
 
@@ -101,10 +127,14 @@ class NewsPortals(models.Model):
 	name = models.CharField(
 			u'Nome do protal de notícia',
 			max_length=100,
+			null=False,
+			blank=False,
 		)
 	link = models.URLField(
 			u'Fonte da notícia',
 			max_length=200,
+			null=False,
+			blank=False,
 		)
 
 	def __unicode__(self):
@@ -119,6 +149,8 @@ class News(models.Model):
 	title = models.CharField(
 			u'Título',
 			max_length=100,
+			null=False,
+			blank=False,
 		)
 	published = models.BooleanField(
 			u'Exibido',
@@ -127,6 +159,8 @@ class News(models.Model):
 	link = models.URLField(
 			u'Fonte da notícia',
 			max_length=200,
+			null=False,
+			blank=False,
 		)
 	category = models.ForeignKey(
 			Category,
