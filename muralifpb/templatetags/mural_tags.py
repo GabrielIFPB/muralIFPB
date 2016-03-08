@@ -1,7 +1,8 @@
 # -*- coding: UTF-8 -*-
 from django import template
-from django.template.defaultfilter import stringfilter
 from django.contrib.auth.models import User
+
+register = template.Library()
 
 from muralifpb.models import News
 from muralifpb.models import Post

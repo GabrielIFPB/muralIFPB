@@ -18,7 +18,9 @@
 				
 				<div class="search">
 					{% if userStudent %}
-						{{ userStudent.user.username }} - 
+						{{ userStudent.user.username }}
+					{% else %}
+						<b>IFPB news</b>
 					{% endif %}
 					<!--
 						<form name="form_search" action="#" method="post">

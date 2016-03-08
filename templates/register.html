@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}IFPB register{% endblock %}
+{% block title %}IFPB news - register User{% endblock %}
 
 {% block content %}
-	<h3>register</h3>
-	<a href="/settings">Back to settings</a>
+	<h3>Register User</h3>
+	
 
 	<form action="." method="POST" >{% csrf_token %}
 		{{ form.as_p }}

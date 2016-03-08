@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load mural_tags %}
 
 {% block title %}IFPB news{% endblock %}
 
@@ -7,7 +8,7 @@
 	<a href="{% static 'muralifpb/img/search-submit.png' %}">download img</a>
 	<br>
 
-	{{ show_news }}
-	{{ show_posts }}
+	{% show_news %}
+	{% show_posts %}
 
 {% endblock %}

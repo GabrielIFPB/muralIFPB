@@ -3,6 +3,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
 
+import feedparser
+
 class UserStudent(models.Model):
 
 	matricula = models.CharField(
@@ -176,6 +178,21 @@ class News(models.Model):
 			u'Exibido em',
 			auto_now_add=True,
 		)
+
+	def creating_news(self):
+		#feed = feedparser.parse(self.font.link)
+		feed = feedparser.parse('https://feeds.feedburner.com/Diolinux')
+
+		for post in feed['entries']:
+			self.title = post.title
+			self.link = post.link
+
+		return "Titulo: " + self.title + " - link: " + self.link
+
+
+
+		#for post in feed.entries:
+		#feed['entries'][0]['title']
 
 	def __unicode__(self):
 		return self.title
