@@ -5,22 +5,10 @@
 {% block content %}
 
 	<h2>Post</h2>
-
+	{{ request.user.username }}
 	<form action="." method="POST" >{% csrf_token %}
 		{{ form.as_p }}
 		<input type="submit" />
 	</form>
-
-	<hr>
-
-	<h3>Lista de Postagens </h3>
-
-	{% if posts %}
-		{% for post in posts %}
-			<p>{{ post.id }}{{ post.category.name }} {{ post.author.user.username }} {{ post.title }} {{ post.text }} {{ post.created_on }} {{ post.updated_on }} {{ post.published }}</p>
-		{% endfor %}
-	{% else %}
-		<p>not list!</p>
-	{% endif %}
 
 {% endblock %}

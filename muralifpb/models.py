@@ -3,8 +3,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
 
-import feedparser
-
 class UserStudent(models.Model):
 
 	matricula = models.CharField(
@@ -82,7 +80,7 @@ class Post(models.Model):
 		#ordering = [u'-created_on']
 
 	author = models.ForeignKey(
-			UserStudent,
+			User,
 			verbose_name=u'Postado por',
 			null=True,
 			blank=True,
@@ -148,22 +146,6 @@ class News(models.Model):
 		verbose_name = u'Notícia'
 		verbose_name_plural = u'Notícias'
 
-	title = models.CharField(
-			u'Título',
-			max_length=100,
-			null=False,
-			blank=False,
-		)
-	published = models.BooleanField(
-			u'Exibido',
-			default=True,
-		)
-	link = models.URLField(
-			u'Fonte da notícia',
-			max_length=200,
-			null=False,
-			blank=False,
-		)
 	category = models.ForeignKey(
 			Category,
 			verbose_name=u'categoria',
@@ -173,26 +155,57 @@ class News(models.Model):
 			NewsPortals,
 			verbose_name=u'Fonte da notícia',
 		)
+	title = models.CharField(
+			u'Título',
+			max_length=100,
+			null=False,
+			blank=False,
+		)
+	text = models.TextField(
+			u'Texto',
+			null=False,
+			blank=False,
+			default=''
+		)
+	link = models.URLField(
+			u'Fonte da notícia',
+			max_length=200,
+			null=False,
+			blank=False,
+		)
+	published_date = models.DateTimeField(
+			u'Publicado em',
+			
+		)
+	published = models.BooleanField(
+			u'Exibido',
+			default=False,
+		)
 	# Audit fields
 	created_on = models.DateTimeField(
 			u'Exibido em',
 			auto_now_add=True,
 		)
 
-	def creating_news(self):
-		#feed = feedparser.parse(self.font.link)
-		feed = feedparser.parse('https://feeds.feedburner.com/Diolinux')
+	@staticmethod
+	def creating_news(link=None):
+		#BeautifulSoup
+		#requests
+		if link is not None:
+			feeds = feedparser.parse(link)
 
-		for post in feed['entries']:
-			self.title = post.title
-			self.link = post.link
-
-		return "Titulo: " + self.title + " - link: " + self.link
-
-
-
-		#for post in feed.entries:
-		#feed['entries'][0]['title']
+			for feed in feeds['entries']:
+				news = News(
+						title=feed.title,
+						text=feed.content[0].value,
+						link=feed.link,
+						published_date=feed.date
+					)
+				news.save()
+			return True
+		else:
+			raise ValidationError(u'O link não pode se None!')
+			return False
 
 	def __unicode__(self):
 		return self.title

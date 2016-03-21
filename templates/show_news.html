@@ -1,7 +1,10 @@
 <hr>
 	{% if news %}
 		{% for news in news %}
-			{{ news }}	
+			{{ news.title }}
+			{{ news.text }}
+			{{ news.published_date }}
+			{{ news.link }}
 		{% endfor %}
 	{% else %}
 		<p>not list!</p>

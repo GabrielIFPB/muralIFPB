@@ -8,9 +8,13 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required, permission_required
 from django.utils.decorators import method_decorator
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate
 
 from muralifpb.models import UserStudent
 from muralifpb.form import user_inline
+
+from muralifpb.form import UserStudentForm
+from muralifpb.form import UserForm
 
 from muralifpb.models import News
 from muralifpb.models import Category
@@ -32,16 +36,27 @@ def index(request):
 		}
 	)
 
-def register(request):
-	users = UserStudent.objects.all()
+@login_required
+def account(request):
+	posts = Post.objects.filter(author_id=request.user.id)
 
-	if request.method == 'POST':
-		user_form = user_inline(request.POST)
+	return render(request, 'account.html', 
+		{
+			#'news' : news,
+			'posts' : posts,
+		}
+	)
+
+@login_required
+def register(request):
+	if request.method == 'POST' and request.user.is_staff:
 		user_django = UserCreationForm(request.POST)
-		if form.is_valid():
-			user = user_form.save()
+		if user_django.is_valid():
 			django = user_django.save()
-			return HttpResponseRedirect(reverse('register'))
+			user_form = user_inline(request.POST, instance=django)
+			if user_form.is_valid():
+				user = user_form.save()
+				return HttpResponseRedirect(reverse('register'))
 	else:
 		user_form = user_inline()
 		user_django = UserCreationForm()
@@ -53,6 +68,30 @@ def register(request):
 		}
 	)
 
+@login_required
+def edit_user(request):
+	user = get_object_or_404(User, id=request.user.id)
+	userStudent = UserStudent.objects.get(user_id=request.user.id)
+
+	if request.method == 'POST' and request.user.is_authenticated():
+		form = UserStudentForm(request.POST, instance=userStudent)
+		user_form = UserForm(request.POST, instance=user)
+		if form.is_valid() and user_form.is_valid():
+			user_form.save()
+			userStudent = form.save()
+			return HttpResponseRedirect(reverse('/'))
+	else:
+		form = UserStudentForm(instance=userStudent)
+		user_form = UserForm(instance=user)
+
+	return render(request, 'edit_user.html',
+		{
+			'user_form' : user_form,
+			'form': form,
+		}
+	)
+
+@login_required
 def add_category(request):
 	categories = Category.objects.all()
 
@@ -71,7 +110,8 @@ def add_category(request):
 		}
 	)
 
-def edit_category(request, id):
+@login_required
+def edit_category(request, id=None):
 	category = get_object_or_404(Category, id=id)
 
 	if request.method == 'POST':
@@ -95,24 +135,25 @@ def delete_category(request, id):
 	category.delete()
 	return HttpResponseRedirect(reverse('add_category'))
 
+@login_required
 def add_post(request):
-	posts = Post.objects.all()
-
 	if request.method == 'POST':
 		form = PostForm(request.POST)
 		if form.is_valid():
-			post = form.save()
+			post = form.save(commit=False)
+			post.author_id = request.user.id
+			post.save()
 			return HttpResponseRedirect(reverse('add_post'))
 	else:
 		form = PostForm()
 
 	return render(request, 'add_post.html',
 		{
-			'posts': posts,
 			'form': form,
 		}
 	)
 
+@login_required
 def edit_post(request, id):
 	post = get_object_or_404(Post, id=id)
 
@@ -135,8 +176,9 @@ def edit_post(request, id):
 def delete_post(request, id):
 	post = get_object_or_404(Post, id=id)
 	post.delete()
-	return HttpResponseRedirect(reverse('add_post'))
+	return HttpResponseRedirect(reverse('account'))
 
+@login_required
 def add_portal(request):
 	portals = NewsPortals.objects.all()
 
@@ -155,6 +197,7 @@ def add_portal(request):
 		}
 	)
 
+@login_required
 def edit_portal(request, id):
 	portal = get_object_or_404(NewsPortals, id=id)
 

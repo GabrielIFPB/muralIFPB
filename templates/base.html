@@ -1,7 +1,7 @@
 {% load staticfiles %}
-<!DOCTYPE html>
 
-<html lang="pt-BR">
+<!DOCTYPE html>
+<html lang="pt-br">
 	<head>
 		<meta charset="UTF-8">
 		<title>{% block title %}{% endblock %}</title>
@@ -11,14 +11,18 @@
 	</head>
 	<body>
 		<div id="header">
-			<div id="box-header">	
+			<div id="box-header">
 				<div id="logo-if">
 					<a href="/"></a>
 				</div><!--logo-if-->
 				
 				<div class="search">
-					{% if userStudent %}
-						{{ userStudent.user.username }}
+					{% if request.user.is_authenticated %}
+						{% if request.user.is_staff %}
+							{{ request.user.username }} Admin
+						{% else %}
+							{{ request.user.username }} Estudante
+						{% endif %}
 					{% else %}
 						<b>IFPB news</b>
 					{% endif %}
@@ -32,14 +36,21 @@
 
 				<div id="menu">
 					<ul>
-						<li><a href="#">Feed</li></a>
-						<li><a href="#">Perfil</li></a>
-						<li><a href="/login/">Conta</li></a>
+						{% if request.user.is_authenticated %}
+							<!--<li><a href="#">Feed</li></a>-->
+							<li><a href="/edit_user/">Perfil</li></a>
+							{% if request.user.is_staff %}
+								<li><a href="/register/">Cadastrar</li></a>
+							{% endif %}
+							<li><a href="/account">account</li></a>
+							<li><a href="/exit">Exit</li></a>
+						{% else %}
+							<li><a href="/login/">Logar</li></a>
+						{% endif %}
 					</ul>
 				</div><!--menu-->
 			</div><!--box-header-->
 		</div><!--header-->
-
 		
 		<div id="main">
 			{% block content %}
@@ -52,6 +63,5 @@
 				<p>Desenvolvido Jerônimo Gabriel</p>
 			</div><!--credits-->
 		</div><!--footer-->
-		
 	</body>
 </html>
