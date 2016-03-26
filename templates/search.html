@@ -3,20 +3,16 @@
 {% block title %}IFPB search {% endblock %}
 
 {% block content %}
-<!-- precisa ser editado para pesquisa de usuários -->
-<h1>precisa ser editado para pesquisa de usuários</h1>
-<a href="/settings">Back to settings</a>
-	<form action="." method="POST" >{% csrf_token %}
-		{{ form.as_p }}
-		<input type="submit" />
-	</form>
-	<hr>
-	<h3>Lista de Users</h3>
-	{% if users %}
-		{% for user in users %}
-			<p>{{ user.first_name }} {{ user.last_name }}</p>
-		{% endfor %}
-	{% else %}
-		<p>not list!</p>
-	{% endif %}
+	
+	<div id="main">
+		<h3>Lista de Users</h3>
+		{% if users %}
+			{% for user in users %}
+				<p><a href="">Edit</a>{{ user.matricula }} {{ user.user.username }} {{ user.user.first_name }} </p>
+			{% endfor %}
+		{% else %}
+			<p>not list!</p>
+		{% endif %}
+	</div>
+	
 {% endblock %}

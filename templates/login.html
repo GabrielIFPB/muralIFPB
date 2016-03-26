@@ -3,11 +3,15 @@
 {% block title %}IFPB login{% endblock %}
 
 {% block content %}
-	<h2>Login</h2>
 	
-	<form action="." method="POST" >{% csrf_token %}
-		{{ form.as_p }}
-		<input type="submit" />
-	</form>
+	<div id="main" align="center">
+		<h2>Login</h2>
+		<dir class="auth-form-body" >
+			<form action="." method="POST" >{% csrf_token %}
+				{{ form.as_p }}
+				<button class="button" type="submit">Sign in</button>
+			</form>
+		</dir>
+	</div>
 
 {% endblock %}

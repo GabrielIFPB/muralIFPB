@@ -1,8 +1,14 @@
-<hr>
-	{% if posts %}
+{% if posts %}
+	<div id="right" class="floating-right post">
 		{% for post in posts %}
-			<p>{{ post.title }} | AUTHOR {{ post.author.username }} | {{ post.text }}</p>
+			<ul style="margin-top: 5px;">
+				<li>&nbsp;&nbsp;Title: {{ post.title }}</li>
+				<li>&nbsp;&nbsp;Author: {{ post.author.username }}</li>
+				<li><p><pre>&nbsp;&nbsp;{{ post.text }}</pre></p></li>
+			</ul>
+			<br>
 		{% endfor %}
-	{% else %}
-		<p>not list!</p>
-	{% endif %}
+	</div>
+{% else %}
+	<p>not list!</p>
+{% endif %}

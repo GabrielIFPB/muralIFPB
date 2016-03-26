@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load mural_tags %}
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -6,6 +7,7 @@
 		<meta charset="UTF-8">
 		<title>{% block title %}{% endblock %}</title>
 		<link href="{% static 'muralifpb/css/my-style.css' %}" rel="stylesheet" type="text/css" media="all">
+		<link rel="shortcut icon" href="{% static 'muralifpb/img/favicon.ico' %}" type="image/x-icon" />
 		{% block extrahead %}{% endblock %}
 		{% block extrajs %}{% endblock %}
 	</head>
@@ -38,28 +40,27 @@
 					<ul>
 						{% if request.user.is_authenticated %}
 							<!--<li><a href="#">Feed</li></a>-->
-							<li><a href="/edit_user/">Perfil</li></a>
+							<li><a href="{% url 'edit_user' %}">Perfil</li></a>
 							{% if request.user.is_staff %}
 								<li><a href="/register/">Cadastrar</li></a>
+								<li><a href="/search">Search</li></a>
 							{% endif %}
 							<li><a href="/account">account</li></a>
 							<li><a href="/exit">Exit</li></a>
 						{% else %}
-							<li><a href="/login/">Logar</li></a>
+							<li><a href="{% url 'login' %}">Logar</li></a>
 						{% endif %}
 					</ul>
 				</div><!--menu-->
 			</div><!--box-header-->
 		</div><!--header-->
 		
-		<div id="main">
-			{% block content %}
+		{% block content %}
 
-			{% endblock %}
-		</div><!--main-->
+		{% endblock %}
 	
 		<div id="footer">
-			<div id="credits">
+			<div id="credits" align="center">
 				<p>Desenvolvido Jerônimo Gabriel</p>
 			</div><!--credits-->
 		</div><!--footer-->

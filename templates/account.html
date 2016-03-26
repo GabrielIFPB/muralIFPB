@@ -3,17 +3,32 @@
 {% block title %}IFPB account {{ request.user.username }} {% endblock %}
 
 {% block content %}
-	
-	{% if request.user.is_authenticated %}
-		{% if posts %}
-			{% for post in posts %}
-				<p><a href="/delete_post/{{ post.id }}">{{ post.id }} {{ post.category.name }} {{ post.title }} {{ post.text }} {{ post.created_on }} {{ post.updated_on }} {{ post.published }}</a></p>
-			{% endfor %}
+
+	<div id="main">
+		{% if request.user.is_authenticated %}
+			<h1>Publicados</h1>
+			{% if posts %}
+				{% for post in posts %}
+					<p><a href="/delete_post/{{ post.id }}">{{ post.id }} {{ post.category.name }} {{ post.title }} {{ post.text }} {{ post.created_on }} {{ post.updated_on }} {{ post.published }}</a></p>
+				{% endfor %}
+			{% else %}
+				<p>not list!</p>
+			{% endif %}
+
+			<hr>
+			
+			<h1>Não publicados</h1>
+			{% if unposts %}
+				{% for post in unposts %}
+					<p><a href="/delete_post/{{ post.id }}">{{ post.id }} {{ post.category.name }} {{ post.title }} {{ post.text }} {{ post.created_on }} {{ post.updated_on }} {{ post.published }}</a></p>
+				{% endfor %}
+			{% else %}
+				<p>not list!</p>
+			{% endif %}
+
 		{% else %}
-			<p>not list!</p>
+			<h1 align="center"><b>unauthenticated user</b></h1>
 		{% endif %}
-	{% else %}
-		<h1 align="center"><b>unauthenticated user</b></h1>
-	{% endif %}
+	</div><!--main-->
 	
 {% endblock %}

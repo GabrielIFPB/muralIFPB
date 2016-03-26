@@ -4,15 +4,17 @@
 
 {% block content %}
 	
-	{% if request.user.is_authenticated %}
-		<form action="." method="POST" >{% csrf_token %}
-			{{ form.errors}}
-			{{ form.as_p }}
-			{{ user_form.as_p }}
-			<input type="submit" />
-		</form>
-	{% else %}
-		<h1 align="center"><b>unauthenticated user</b></h1>
-	{% endif %}
+	<div id="main">
+		{% if request.user.is_authenticated %}
+			<form action="." method="POST" >{% csrf_token %}
+				{{ form.errors}}
+				{{ form.as_p }}
+				{{ user_form.as_p }}
+				<input type="submit" />
+			</form>
+		{% else %}
+			<h1 align="center"><b>unauthenticated user</b></h1>
+		{% endif %}
+	</div>
 	
 {% endblock %}

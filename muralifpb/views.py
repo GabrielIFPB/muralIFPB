@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
 from django.shortcuts import render
+from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
@@ -25,25 +26,17 @@ from muralifpb.models import NewsPortals
 from muralifpb.form import NewsPortalsForm
 
 def index(request):
-	#posts = Post.published_objects.all()
-	#posts = Post.objects.filter(published=True)
-	#news = News.objects.filter(published=True)
-
-	return render(request, 'index.html', 
-		{
-			#'news' : news,
-			#'posts' : posts,
-		}
-	)
+	return render(request, 'index.html', { })
 
 @login_required
 def account(request):
-	posts = Post.objects.filter(author_id=request.user.id)
-
+	posts = Post.published_objects.filter(author_id=request.user.id)
+	unposts = Post.unpublished_objects.filter(author_id=request.user.id)
+	#print request.COOKIES
 	return render(request, 'account.html', 
 		{
-			#'news' : news,
 			'posts' : posts,
+			'unposts': unposts,
 		}
 	)
 
@@ -79,7 +72,7 @@ def edit_user(request):
 		if form.is_valid() and user_form.is_valid():
 			user_form.save()
 			userStudent = form.save()
-			return HttpResponseRedirect(reverse('/'))
+			return HttpResponseRedirect(reverse('index'))
 	else:
 		form = UserStudentForm(instance=userStudent)
 		user_form = UserForm(instance=user)
@@ -90,6 +83,16 @@ def edit_user(request):
 			'form': form,
 		}
 	)
+
+@login_required
+def search(request):
+	users = UserStudent.objects.all()
+
+	return render(request, 'search.html',
+		{
+			'users' : users,
+		}
+	)	
 
 @login_required
 def add_category(request):
@@ -175,7 +178,8 @@ def edit_post(request, id):
 @login_required
 def delete_post(request, id):
 	post = get_object_or_404(Post, id=id)
-	post.delete()
+	if request.user.is_authenticated() and request.user.id == post.author_id:
+		post.delete()
 	return HttpResponseRedirect(reverse('account'))
 
 @login_required

@@ -16,3 +16,7 @@ def show_news():
 def show_posts():
 	posts = Post.objects.select_related().filter(published=True)
 	return { 'posts': posts }
+
+@register.inclusion_tag('show_main.html')
+def show_main():
+	pass

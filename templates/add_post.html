@@ -4,11 +4,13 @@
 
 {% block content %}
 
-	<h2>Post</h2>
-	{{ request.user.username }}
-	<form action="." method="POST" >{% csrf_token %}
-		{{ form.as_p }}
-		<input type="submit" />
-	</form>
+	<div id="main">
+		<h2>Post</h2>
+		{{ request.user.username }}
+		<form action="." method="POST" >{% csrf_token %}
+			{{ form.as_p }}
+			<input type="submit" />
+		</form>
+	</div>
 
 {% endblock %}

@@ -20,7 +20,7 @@ from django.contrib import admin
 urlpatterns = [
 	url(r'^admin/', include(admin.site.urls)),
 	url(r'^$', 'muralifpb.views.index', name='index'),
-	url(r'^login/$', 'django.contrib.auth.views.login', {'template_name' : 'login.html'}),
+	url(r'^login/$', 'django.contrib.auth.views.login', {'template_name' : 'login.html'}, name='login'),
 	url(r'^exit/$', 'django.contrib.auth.views.logout', {'template_name' : 'index.html'}, name='index'),
 	url(r'^register/$', 'muralifpb.views.register', name='register'),
 	url(r'^add_category/$', 'muralifpb.views.add_category', name='add_category'),
@@ -33,4 +33,5 @@ urlpatterns = [
 	url(r'^edit_portal/(?P<id>\d+)/$', 'muralifpb.views.edit_portal', name='edit_portal'),
 	url(r'^edit_user/$', 'muralifpb.views.edit_user', name='edit_user'),
 	url(r'^account/$', 'muralifpb.views.account', name='account'),
+	url(r'^search/$', 'muralifpb.views.search', name='search'),
 ]

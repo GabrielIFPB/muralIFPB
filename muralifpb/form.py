@@ -17,7 +17,8 @@ class UserForm(forms.ModelForm):
 
 	class Meta:
 		model = User
-		fields = [u'username', u'first_name', u'last_name', u'is_staff']
+		exclude = [u'last_login', u'date_joined', u'password', ]
+		#fields = [u'username', u'first_name', u'last_name', u'is_staff']
 
 class UserStudentForm(forms.ModelForm):
 

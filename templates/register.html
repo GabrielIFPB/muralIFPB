@@ -4,18 +4,20 @@
 
 {% block content %}
 	
-	{% if request.user.is_authenticated and request.user.is_staff %}
-		<h3>Register User</h3>
-		<form action="." method="POST" >{% csrf_token %}
-		{% if form.erros %}
-			{{ form.errors}}
+	<div id="main">
+		{% if request.user.is_authenticated and request.user.is_staff %}
+			<h3>Register User</h3>
+			<form action="." method="POST" >{% csrf_token %}
+			{% if form.erros %}
+				{{ form.errors}}
+			{% endif %}
+				{{ form.as_p }}
+				{{ users.as_p }}
+				<input type="submit" />
+			</form>
+		{% else %}
+			<h1 align="center"><b>you do not have permission</b></h1>
 		{% endif %}
-			{{ form.as_p }}
-			{{ users.as_p }}
-			<input type="submit" />
-		</form>
-	{% else %}
-		<h1 align="center"><b>you do not have permission</b></h1>
-	{% endif %}
+	</div>
 
 {% endblock %}

@@ -4,22 +4,25 @@
 
 {% block content %}
 
-	<h2>Portal</h2>
+	<div id="main">
+		<h2>Portal</h2>
 
-	<form action="." method="POST" >{% csrf_token %}
-		{{ form.as_p }}
-		<input type="submit" />
-	</form>
+		<form action="." method="POST" >{% csrf_token %}
+			{{ form.as_p }}
+			<input type="submit" />
+		</form>
 
-	<hr>
+		<hr>
 
-	<h3>Lista de Postais de Notíciais </h3>
+		<h3>Lista de Postais de Notíciais </h3>
 
-	{% if portals %}
-		{% for portal in portals %}
-			<p>{{ portal.id }}{{ portal.name }} {{ portal.link }}</p>
-		{% endfor %}
-	{% else %}
-		<p>not list!</p>
-	{% endif %}
+		{% if portals %}
+			{% for portal in portals %}
+				<p>{{ portal.id }}{{ portal.name }} {{ portal.link }}</p>
+			{% endfor %}
+		{% else %}
+			<p>not list!</p>
+		{% endif %}
+	</div>
+
 {% endblock %}

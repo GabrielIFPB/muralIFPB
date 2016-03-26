@@ -4,23 +4,25 @@
 
 {% block content %}
 
-	<h2>Categoria</h2>
-	
-	<form action="." method="POST" >{% csrf_token %}
-		{{ form.as_p }}
-		<input type="submit" />
-	</form>
+	<div id="main">
+		<h2>Categoria</h2>
+		
+		<form action="." method="POST" >{% csrf_token %}
+			{{ form.as_p }}
+			<input type="submit" />
+		</form>
 
-	<hr>
+		<hr>
 
-	<h3>Lista de Categorias </h3>
+		<h3>Lista de Categorias </h3>
 
-	{% if categories %}
-		{% for category in categories %}
-			<a href="/edit_category/{{ category.id }}"><p>{{ category.id }} {{ category.name }} {{ category.published }}</p>
-		{% endfor %}
-	{% else %}
-		<p>not list!</p>
-	{% endif %}
+		{% if categories %}
+			{% for category in categories %}
+				<a href="/edit_category/{{ category.id }}"><p>{{ category.id }} {{ category.name }} {{ category.published }}</p>
+			{% endfor %}
+		{% else %}
+			<p>not list!</p>
+		{% endif %}
+	</div><!--main-->
 
 {% endblock %}
