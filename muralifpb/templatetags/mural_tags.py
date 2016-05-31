@@ -14,9 +14,10 @@ def show_news():
 
 @register.inclusion_tag('show_posts.html')
 def show_posts():
-	posts = Post.objects.select_related().filter(published=True)
+	posts = Post.objects.select_related().filter(published=True).order_by('-created_on')
 	return { 'posts': posts }
 
-@register.inclusion_tag('show_main.html')
-def show_main():
-	pass
+@register.inclusion_tag('show_posts_reitoria.html')
+def show_posts_reitoria():
+	posts = Post.objects.select_related().filter(published=True).order_by('-created_on')
+	return { 'posts': posts }

@@ -4,13 +4,21 @@
 
 {% block content %}
 
-	<div id="main">
+	<div id="main" style="width: 1200; height: 900; overflow: auto;">
 		{% if request.user.is_authenticated %}
 			<h1>Publicados</h1>
 			{% if posts %}
-				{% for post in posts %}
-					<p><a href="/delete_post/{{ post.id }}">{{ post.id }} {{ post.category.name }} {{ post.title }} {{ post.text }} {{ post.created_on }} {{ post.updated_on }} {{ post.published }}</a></p>
-				{% endfor %}
+				<ul>
+					{% for post in posts %}
+						<li><a href="{% url 'delete_post' post.id %}">{{ post.id }}</a>
+						<li>{{ post.category.name }}</li>
+						<li>{{ post.title }}</li>
+						<li>{{ post.text }}</li>
+						<li>{{ post.created_on }}</li>
+						<li>{{ post.updated_on }}</li>
+						<li>{{ post.published }}</li>
+					{% endfor %}
+				</ul>
 			{% else %}
 				<p>not list!</p>
 			{% endif %}
@@ -19,9 +27,17 @@
 			
 			<h1>Não publicados</h1>
 			{% if unposts %}
-				{% for post in unposts %}
-					<p><a href="/delete_post/{{ post.id }}">{{ post.id }} {{ post.category.name }} {{ post.title }} {{ post.text }} {{ post.created_on }} {{ post.updated_on }} {{ post.published }}</a></p>
-				{% endfor %}
+				<ul>
+					{% for post in unposts %}
+						<li><a href="{% url 'delete_post' post.id %}">{{ post.id }}</a>
+						<li>{{ post.category.name }}</li>
+						<li>{{ post.title }}</li>
+						<li>{{ post.text }}</li>
+						<li>{{ post.created_on }}</li>
+						<li>{{ post.updated_on }}</li>
+						<li>{{ post.published }}</li>
+					{% endfor %}
+				</ul>
 			{% else %}
 				<p>not list!</p>
 			{% endif %}

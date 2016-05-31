@@ -16,6 +16,7 @@ class Command(BaseCommand):
 		parser.add_argument('link', nargs='+', type=str)
 		pass
 
+	@staticmethod
 	def handle(self, *args, **options):
 		if options['link'] is not None:
 			for link in options['link']

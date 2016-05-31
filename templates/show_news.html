@@ -1,8 +1,8 @@
 <hr>
 	{% if news %}
 		{% for news in news %}
-			{{ news.title }}
-			{{ news.text }}
+			{{ news.title|title }}
+			{{ news.text|addslashes }}
 			{{ news.published_date }}
 			{{ news.link }}
 		{% endfor %}

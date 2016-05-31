@@ -113,15 +113,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
+AUTH_USER_MODEL = 'muralifpb.UserMy'
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'muralifpb', 'media')
-
 LOGIN_URL = '/login/'
 LOGOUT_URL = '/exit/'
-
 LOGIN_REDIRECT_URL = '/'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_DIRS = (
    ('muralifpb', os.path.join(BASE_DIR, 'templates/static')),

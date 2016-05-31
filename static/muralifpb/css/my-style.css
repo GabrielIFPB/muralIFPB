@@ -1,6 +1,12 @@
 /*RESET*/
 *{margin:0; padding:0;}
+header {
+	position: fixed;
+}
 
+@media only screen and (max-width: 720px) {
+	 header { position: absolute; }
+}
 body{
 	background: #DDDDDD;
 	text-decoration:none;
@@ -99,23 +105,22 @@ a{
 }
 /*--------------------*/
 #menu{
-	width:280px;
-	height:45px;
-	margin: 0 0 0 0px;
-	float:right;
+	width: 380px;
+	height: 20px;
+	float: left;
 	background:none;
-	font:16px Arial, Helvetica, sans-serif;
+	font:13px Arial, Helvetica, sans-serif;
 	font-weight:bold;
 }
 
 #menu ul{
-	margin: 12px 0 0 0;
+	margin: 7px 0 0 0;
 }
 
 #menu ul li{
 	list-style:none;
 	display:inline;
-	margin: 0 2px;
+	/*margin: 0 2px;*/
 	padding:10px 8px;
 	color:#ddd;
 	text-shadow: 1px 1px 4px #000000;
@@ -139,7 +144,7 @@ a{
 #menu a:hover{
 	color:#fff;
 	cursor: pointer;
-	text-shadow: 1px 2px 6px #ffffff;
+	text-shadow: 1px 2px 4px #ffffff;
 }
 /*-----------------------------------------*/
 
@@ -181,6 +186,7 @@ a{
 
 .floating-right {
 	float: right;
+
 }
 
 .floating-left {
@@ -191,9 +197,9 @@ a{
 	float: left;
 	margin-top: 2px;
 	background: #FFFFFF;
-	margin-left: 12px;
+	margin-left: 10px;
 	border-radius: 10px;
-	width: 370px;
+	width: 22%;
 	height: 800px;
 }
 
@@ -201,9 +207,9 @@ a{
 	float: right;
 	margin-top: 2px;
 	background: #FFFFFF;
-	margin-right: 12px;
+	margin-right: 10px;
 	border-radius: 10px;
-	width: 370px;
+	width: 22%;
 	height: 800px;
 }
 /*button*/
@@ -211,11 +217,11 @@ a{
 	margin-top: 10px;
 }
 input {
+	-moz-box-shadow: 1px 1px 2px #333333;
+	-webkit-border-radius:4px;
+	width: 350px;
 	margin-top: 5px;
-	margin-bottom: 15px;
-	min-height: 25px;
-	padding: 4px 30px;
-	font-size: 13px;
+	padding: 3px 0px;
 	color: #333;
 	vertical-align: middle;
 	background-color: #FFFFFF;
@@ -225,20 +231,20 @@ input {
 	border-radius: 3px;
 	outline: none;
 	box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
-	font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	font: 20px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 	display: block;
 }
+
 .auth-form-body {
-	padding: 10px;
-	font-size: 14px;
-	background-color: #fff;
-	border: 1px solid #d8dee2;
-	border-top: 0;
-	border-radius: 0 0 3px 3px;
+	float: ;
+	margin-top: 10px;
+	border: 1px solid rgba(6, 72, 3, 0.28);
+	border-radius: 6px;
+	width: 500px;
+	height: 230px;
+	display: block;
 }
-.post {
-	height: 0;
-	overflow: visible;
-	position: absolute;
-	right: 0;
+
+.errorlist span {
+	color: red;
 }

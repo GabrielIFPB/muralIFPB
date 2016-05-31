@@ -1,19 +1,15 @@
 # -*- coding: UTF-8 -*-
 from django.shortcuts import render
-from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
-from django.contrib.auth.models import User
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required, permission_required
 from django.utils.decorators import method_decorator
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import authenticate
 
-from muralifpb.models import UserStudent
-from muralifpb.form import user_inline
-
+from muralifpb.models import UserMy
 from muralifpb.form import UserStudentForm
 from muralifpb.form import UserForm
 
@@ -32,61 +28,55 @@ def index(request):
 def account(request):
 	posts = Post.published_objects.filter(author_id=request.user.id)
 	unposts = Post.unpublished_objects.filter(author_id=request.user.id)
-	#print request.COOKIES
-	return render(request, 'account.html', 
-		{
+	context = {
 			'posts' : posts,
 			'unposts': unposts,
 		}
-	)
+	return render(request, 'account.html', context)
 
 @login_required
 def register(request):
+	context = {}
 	if request.method == 'POST' and request.user.is_staff:
-		user_django = UserCreationForm(request.POST)
-		if user_django.is_valid():
-			django = user_django.save()
-			user_form = user_inline(request.POST, instance=django)
-			if user_form.is_valid():
-				user = user_form.save()
-				return HttpResponseRedirect(reverse('register'))
+		form = UserStudentForm(request.POST)
+		if form.is_valid():
+			user = form.save()
+			context['success'] = True
 	else:
-		user_form = user_inline()
-		user_django = UserCreationForm()
+		form = UserStudentForm()
+	context['form'] = form
+	return render(request, 'register.html', context)
 
-	return render(request, 'register.html', 
-		{
-			'users': UserCreationForm,
-			'form': user_inline,
-		}
-	)
+@login_required
+def edit_password(request):
+	context = {}
+	if request.method == 'POST' and request.user.is_authenticated():
+		form = PasswordChangeForm(data=request.POST, user=request.user)
+		if form.is_valid():
+			form.save()
+			context['success'] = True
+	else:
+		form = PasswordChangeForm(user=request.user)
+	context['form'] = form
+	return render(request, 'edit_password.html', context)
 
 @login_required
 def edit_user(request):
-	user = get_object_or_404(User, id=request.user.id)
-	userStudent = UserStudent.objects.get(user_id=request.user.id)
-
+	user = get_object_or_404(UserMy, id=request.user.id)
+	context = {}
 	if request.method == 'POST' and request.user.is_authenticated():
-		form = UserStudentForm(request.POST, instance=userStudent)
-		user_form = UserForm(request.POST, instance=user)
-		if form.is_valid() and user_form.is_valid():
-			user_form.save()
-			userStudent = form.save()
-			return HttpResponseRedirect(reverse('index'))
+		form = UserForm(request.POST, instance=user)
+		if form.is_valid():
+			user = form.save()
+			context['success'] = True
 	else:
-		form = UserStudentForm(instance=userStudent)
-		user_form = UserForm(instance=user)
-
-	return render(request, 'edit_user.html',
-		{
-			'user_form' : user_form,
-			'form': form,
-		}
-	)
+		form = UserForm(instance=user)
+	context['form'] = form
+	return render(request, 'edit_user.html', context)
 
 @login_required
 def search(request):
-	users = UserStudent.objects.all()
+	users = UserMy.objects.all()
 
 	return render(request, 'search.html',
 		{
@@ -141,7 +131,7 @@ def delete_category(request, id):
 @login_required
 def add_post(request):
 	if request.method == 'POST':
-		form = PostForm(request.POST)
+		form = PostForm(request.POST, request.FILES)
 		if form.is_valid():
 			post = form.save(commit=False)
 			post.author_id = request.user.id

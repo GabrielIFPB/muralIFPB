@@ -8,12 +8,12 @@
 	}
 </style>
 
-<dir id="right" class="floating-right" style=" overflow: auto;">
-	<h6>Alunos</h6>
+<dir id="left" class="floating-left" style="overflow: auto;">
+	<h6>Direção</h6>
 	<ul style="margin-top: 5px; ">
 		{% for post in posts %}
-			{% if not post.author.is_reitoria %}
-				<dir style="background: rgba(179,255,206,0.17); list-style-type: none; margin-left: 3px; margin-right: 3px; border-radius: 5px; border: 1px solid rgba(6, 72, 3, 0.28); margin-top: 3px; margin-bottom: 3px;">
+			{% if post.author.is_reitoria %}
+				<dir style="background: rgba(179,255,206,0.17); list-style-type: none; margin-left: 3px; margin-right: 3px; border-radius: 5px; border: 1px solid rgba(6, 72, 3, 0.28); margin-top: 3px; margin-bottom: 3px; ">
 					{% if post.author.image %}
 						<li style="font-weight: 900;">
 							<img src="{ post.author.image.url }" style="margin-right: 0px; float: ;" />

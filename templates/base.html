@@ -18,7 +18,7 @@
 					<a href="/"></a>
 				</div><!--logo-if-->
 				
-				<div class="search">
+				<div >
 					{% if request.user.is_authenticated %}
 						{% if request.user.is_staff %}
 							{{ request.user.username }} Admin
@@ -28,30 +28,29 @@
 					{% else %}
 						<b>IFPB news</b>
 					{% endif %}
-					<!--
-						<form name="form_search" action="#" method="post">
-							<input type="search" name="q" placeholder="Procure pessoas, lugares, coisas..." class="box_search" />
-							<input type="submit" name="enviar" value="&nbsp;" class="btn_search"/>
-						</form>
-					-->
 				</div><!--search-->
 
-				<div id="menu">
-					<ul>
+				
+
+					<ul class="menu">
 						{% if request.user.is_authenticated %}
-							<!--<li><a href="#">Feed</li></a>-->
-							<li><a href="{% url 'edit_user' %}">Perfil</li></a>
-							{% if request.user.is_staff %}
-								<li><a href="/register/">Cadastrar</li></a>
-								<li><a href="/search">Search</li></a>
-							{% endif %}
-							<li><a href="/account">account</li></a>
-							<li><a href="/exit">Exit</li></a>
+							<li><a href="#"><img src="{% static 'muralifpb/img/ic_settings_black_24dp_2x.png' %}" alt="Opções" style=" display: inline; width: 35px; height: 35px;" /></a>
+								<ul>
+									<li><a href="{% url 'edit_user' %}" >Perfil</a></li>
+									{% if request.user.is_staff %}
+										<li><a href="{% url 'register' %}">Cadastrar</a></li>
+										<li><a href="{% url 'search' %}">Search</a></li>
+									{% endif %}
+									<li><a href="{% url 'account' %}">account</a></li>
+									<li><a href="{% url 'index' %}">Exit</a></li>
+								</ul>
+							</li>
 						{% else %}
-							<li><a href="{% url 'login' %}">Logar</li></a>
+							<li><a href="{% url 'login' %}">Logar</a></li>
 						{% endif %}
 					</ul>
-				</div><!--menu-->
+
+				
 			</div><!--box-header-->
 		</div><!--header-->
 		

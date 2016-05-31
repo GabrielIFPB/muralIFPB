@@ -1,28 +1,24 @@
-{% extends 'base.html' %}
+{% extends 'login.html' %}
+{% load staticfiles %}
 
 {% block title %}IFPB news - Adicionar Categoria {% endblock %}
+{% block extrahead %}<link href="{% static 'muralifpb/css/css-for-errors-li.css' %}" rel="stylesheet" type="text/css" media="all">{% endblock %}
 
-{% block content %}
 
-	<div id="main">
-		<h2>Categoria</h2>
-		
-		<form action="." method="POST" >{% csrf_token %}
-			{{ form.as_p }}
-			<input type="submit" />
-		</form>
-
-		<hr>
-
-		<h3>Lista de Categorias </h3>
-
-		{% if categories %}
-			{% for category in categories %}
-				<a href="/edit_category/{{ category.id }}"><p>{{ category.id }} {{ category.name }} {{ category.published }}</p>
-			{% endfor %}
-		{% else %}
-			<p>not list!</p>
-		{% endif %}
-	</div><!--main-->
-
+{% block dashboard_content %}
+	<h2>Categoria</h2>	
+	<form action="." method="POST" >{% csrf_token %}
+		{{ form.as_p }}
+		<input type="submit" />
+	</form>
+	<hr>
+	<h3>Lista de Categorias </h3>
+	{% if categories %}
+		{% for category in categories %}
+			<a href="{% url 'edit_category' category.id %}"><p>{{ category.id }} {{ category.name }} {{ category.published }}</p>
+		{% endfor %}
+	{% else %}
+		<p>not list!</p>
+	{% endif %}
 {% endblock %}
+

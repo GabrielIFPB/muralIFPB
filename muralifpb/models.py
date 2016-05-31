@@ -1,34 +1,78 @@
 # -*- coding: UTF-8 -*-
 from django.db import models
-from django.contrib.auth.models import User
-from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
+from django.core import validators
+from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser, PermissionsMixin, UserManager)
 
-class UserStudent(models.Model):
+import re
+
+class UserMy(AbstractBaseUser, PermissionsMixin):
+
+	class Meta:
+		verbose_name = 'Usuário'
+		verbose_name_plural = 'Usuários'
 
 	matricula = models.CharField(
-			verbose_name='Matricula',
+			'Matricula',
+			unique=True,
 			max_length=30,
-			unique=True,
 			null=False,
 			blank=False,
 		)
+	username = models.CharField(
+		'Nome de Usuário',
+		max_length=30,
+		unique=True, 
+		validators=[validators.RegexValidator(re.compile('^[\w.@+-]+$'),
+			'O nome de usuário só pode conter letras, digitos ou os '
+			'seguintes caracteres: @/./+/-/_', 'invalid')]
+	)
 	email = models.EmailField(
-			verbose_name='Email',
-			max_length=200,
-			unique=True,
-			null=False,
-			blank=False,
-		)
-	user = models.OneToOneField(
-			User,
-			verbose_name=u'Usuário',
-			related_name=u'Usuarios',
+			'Email',
 			unique=True,
 		)
+	image = models.ImageField(
+			'imagem',
+			null=True,
+			blank=True,
+		)
+	name = models.CharField(
+			'Nome',
+			max_length=60,
+			blank=True,
+		)
+	is_reitoria = models.BooleanField(
+			'É da reitoria?',
+			blank=True,
+			default=False,
+		)
+	is_active = models.BooleanField(
+			'Está ativo?',
+			blank=True,
+			default=True,
+		)
+	is_staff = models.BooleanField(
+			'É da equipe administrativa?',
+			blank=True,
+			default=False,
+		)
+	date_joined = models.DateTimeField(
+			'Data de Entrada',
+			auto_now_add=True,
+		)
+
+	objects = UserManager()
+	USERNAME_FIELD = 'username'
+	REQUIRED_FIELDS = ['email']
 
 	def __unicode__(self):
-		return  self.matricula
+		return  self.name or self.username
 
+	def get_short_name(self):
+		return self.username
+
+	def get_full_name(self):
+		return str(self)
+		
 class Category(models.Model):
 
 	class Meta:
@@ -61,13 +105,13 @@ class Category(models.Model):
 
 class PublishedManager(models.Manager):
 
-	def get_query_set(self):
-		return super(PublishedManager, self).get_query_set().filter(published=True)
+	def get_queryset(self):
+		return super(PublishedManager, self).get_queryset().filter(published=True)
 
 class UnpublishedManager(models.Manager):
 
-	def get_query_set(self):
-		return super(UnpublishedManager, self).get_query_set().filter(published=False)
+	def get_queryset(self):
+		return super(UnpublishedManager, self).get_queryset().filter(published=False)
 
 class Post(models.Model):
 
@@ -80,8 +124,14 @@ class Post(models.Model):
 		#ordering = [u'-created_on']
 
 	author = models.ForeignKey(
-			User,
+			UserMy,
 			verbose_name=u'Postado por',
+			null=True,
+			blank=True,
+		)
+	image = models.ImageField(
+			upload_to='images',
+			verbose_name='imagem',
 			null=True,
 			blank=True,
 		)
@@ -125,7 +175,7 @@ class Post(models.Model):
 class NewsPortals(models.Model):
 
 	name = models.CharField(
-			u'Nome do protal de notícia',
+			u'Nome do portal de notícia',
 			max_length=100,
 			null=False,
 			blank=False,
@@ -188,24 +238,24 @@ class News(models.Model):
 		)
 
 	@staticmethod
-	def creating_news(link=None):
+	def creating_news():
 		#BeautifulSoup
 		#requests
-		if link is not None:
-			feeds = feedparser.parse(link)
+		portais = NewsPortals.objects.all()
+		if portais is not None:
+			for portal in portais:
+				feeds = feedparser.parse(portal.link)
 
-			for feed in feeds['entries']:
-				news = News(
-						title=feed.title,
-						text=feed.content[0].value,
-						link=feed.link,
-						published_date=feed.date
-					)
-				news.save()
-			return True
+				for feed in feeds['entries']:
+					news = News(
+							title=feed.title,
+							text=feed.content[0].value,
+							link=feed.link,
+							published_date=feed.date
+						)
+					news.save()
 		else:
 			raise ValidationError(u'O link não pode se None!')
-			return False
 
 	def __unicode__(self):
 		return self.title

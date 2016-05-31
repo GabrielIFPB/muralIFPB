@@ -5,7 +5,6 @@
 {% block content %}
 	
 	<div id="main">
-		<a href="/settings">Back to settings</a>
 		<form action="." method="POST" >{% csrf_token %}
 			{{ form.as_p }}
 			<input type="submit" />

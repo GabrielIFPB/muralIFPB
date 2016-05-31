@@ -1,47 +1,62 @@
 # -*- coding: UTF-8 -*-
 from django import forms
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm
-from django.forms.models import inlineformset_factory
+from django.contrib.auth import get_user_model
 
 from django.utils.translation import ugettext_lazy as _
 
-from muralifpb.models import UserStudent
+from muralifpb.models import UserMy
 from muralifpb.models import Category
 from muralifpb.models import Post
 from muralifpb.models import NewsPortals
 
+User = get_user_model()
 
 class UserForm(forms.ModelForm):
 
 	class Meta:
 		model = User
-		exclude = [u'last_login', u'date_joined', u'password', ]
-		#fields = [u'username', u'first_name', u'last_name', u'is_staff']
+		fields = [u'username', u'name', u'email', u'image']
+
+		def clean_email(self):
+			email = self.cleaned_data.get(u'email')
+			queryset =  User.objects.filter(email=email).exlude(pk=self.instance.pk)
+			
+			if queryset.exists():
+				raise forms.ValidationError(u'Já existe um aluno com essa matricula.')
+			return email
 
 class UserStudentForm(forms.ModelForm):
 
 	class Meta:
-		model = UserStudent
-		exclude = [u'user', ]
-	"""
-	def clean_matricula(self):
-		matricula = self.cleaned_data.get(u'matricula')
-
-		if UserStudent.objects.filter(matricula=matricula):
-			raise forms.ValidationError(u'matricula existente!')
-		return matricula
+		model = User
+		fields = [u'matricula', u'username', u'email', u'is_staff', u'is_reitoria']
 	
-	def clean_email(self):
-		email = self.cleaned_data.get(u'email')
+	password1 = forms.CharField(
+			label='Senha',
+			widget=forms.PasswordInput,
+		)
+	password2 = forms.CharField(
+			label='Confirmação de Senha',
+			widget=forms.PasswordInput,
+		)
+	def clean_password2(self):
+		password1 = self.cleaned_data.get('password1')
+		password2 = self.cleaned_data.get('password2')
 
-		if UserStudent.objects.filter(email=email):
-			raise forms.ValidationError(u'Email existente!')
-		return email
-	"""
+		if password2 and password1 and password2 != password1:
+			raise forms.ValidationError(
+					self.error_messages['password_mismatch'],
+					code='password_mismatch',
+				)
+		return password2
 
-user_inline = inlineformset_factory(User, UserStudent, UserStudentForm, exclude=[], can_delete=False, )
+	def save(self, commit=True):
+		user = super(UserStudentForm, self).save(commit=False)
+		user.set_password(self.cleaned_data['password1'])
+		if commit:
+			user.save()
+		return user
 
 class CategoryForm(forms.ModelForm):
 
@@ -92,27 +107,3 @@ class NewsPortalsForm(forms.ModelForm):
 		if NewsPortals.objects.filter(link=link):
 			raise forms.ValidationError(u'Esse link já existe!')
 		return link
-
-class LoginForm(forms.Form):
-	username = forms.CharField(label=u'login', max_length=20)
-	password = forms.CharField(label=u'password', max_length=40)
-
-	def clean_username(self):
-		username = self.cleaned_data.get(u'username')
-
-		if not User.objects.filter(username=username):
-			raise forms.ValidationError(u'Login inexistente')
-		return username
-
-	def clean_password(self):
-		username = self.cleaned_data.get(u'username')
-		password = self.cleaned_data.get(u'password')
-
-		if not authenticate(username=username, password=password):
-			raise forms.ValidationError(u'password error')
-		return password
-
-	def save(self):
-		username = self.cleaned_data.get(u'username')
-		password = self.cleaned_data.get(u'password')
-		return authenticate(username=username, password=password)

@@ -1,18 +1,58 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
 {% block title %}IFPB search {% endblock %}
+{% block extrahead %}<link href="{% static 'muralifpb/css/css-for-errors-li.css' %}" rel="stylesheet" type="text/css" media="all">{% endblock %}
 
 {% block content %}
+	<style type="text/css">
+		table {
+		    border-collapse: collapse;
+		    width: 100%;
+		}
+
+		th, td {
+		    text-align: left;
+		    padding: 8px;
+		}
+
+		tr:nth-child(even){
+			background-color: #f2f2f2;
+		}
+
+		th {
+		    background-color: #4CAF50;
+		    color: white;
+		}
+	</style>
 	
 	<div id="main">
-		<h3>Lista de Users</h3>
-		{% if users %}
-			{% for user in users %}
-				<p><a href="">Edit</a>{{ user.matricula }} {{ user.user.username }} {{ user.user.first_name }} </p>
-			{% endfor %}
-		{% else %}
-			<p>not list!</p>
-		{% endif %}
+		<dir class="div">
+			<h2 class="title">Lista de Users</h2>
+
+			<table >
+				<thead>
+					<tr>
+						<th>Matricula</th> 
+						<th>Name</th>
+						<th>Email</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% if users %}
+						{% for user in users %}
+							<tr>
+								<td><a href="">{{ user.matricula }}</a></td>
+								<td>{{ user.username }}</td>
+								<td>{{ user.email }}</td>
+							</tr>
+						{% endfor %}
+					{% else %}
+						<p>not list!</p>
+					{% endif %}
+				</tbody>
+			</table>
+		</dir>
 	</div>
 	
 {% endblock %}

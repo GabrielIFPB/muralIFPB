@@ -4,7 +4,7 @@
 
 {% block content %}
 
-	<div id="main">
+	<div id="main" align="center">
 		<h2>Portal</h2>
 
 		<form action="." method="POST" >{% csrf_token %}
@@ -18,7 +18,7 @@
 
 		{% if portals %}
 			{% for portal in portals %}
-				<p>{{ portal.id }}{{ portal.name }} {{ portal.link }}</p>
+				<p>{{ portal.id }} {{ portal.name }} {{ portal.link }}</p>
 			{% endfor %}
 		{% else %}
 			<p>not list!</p>

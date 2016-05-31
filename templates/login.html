@@ -1,17 +1,22 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
 {% block title %}IFPB login{% endblock %}
+{% block extrahead %}<link href="{% static 'muralifpb/css/css-for-errors-li.css' %}" rel="stylesheet" type="text/css" media="all">{% endblock %}
 
 {% block content %}
 	
 	<div id="main" align="center">
-		<h2>Login</h2>
-		<dir class="auth-form-body" >
+		{% block dashboard_content %}
 			<form action="." method="POST" >{% csrf_token %}
-				{{ form.as_p }}
-				<button class="button" type="submit">Sign in</button>
+				<div class="block-login">
+					<h2 class="title">Login</h2>
+					{{ form.non_field_errors }}
+					{{ form.as_p }}
+					<input class="button button-color" type="submit" name="Sign in" value="Sign in" >
+				</div>
 			</form>
-		</dir>
+		{% endblock %}
 	</div>
 
 {% endblock %}
