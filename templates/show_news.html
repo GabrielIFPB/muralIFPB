@@ -1,0 +1,11 @@
+<hr>
+	{% if news %}
+		{% for news in news %}
+			{{ news.title|title }}
+			{{ news.text|addslashes }}
+			{{ news.published_date }}
+			{{ news.link }}
+		{% endfor %}
+	{% else %}
+		<p>not list!</p>
+	{% endif %}

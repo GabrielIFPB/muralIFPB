@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}IFPB account {{ request.user.username }} {% endblock %}
+
+{% block content %}
+
+	<div id="main" style="width: 1200; height: 900; overflow: auto;">
+		{% if request.user.is_authenticated %}
+			<h1>Publicados</h1>
+			{% if posts %}
+				<ul>
+					{% for post in posts %}
+						<li><a href="{% url 'delete_post' post.id %}">{{ post.id }}</a>
+						<li>{{ post.category.name }}</li>
+						<li>{{ post.title }}</li>
+						<li>{{ post.text }}</li>
+						<li>{{ post.created_on }}</li>
+						<li>{{ post.updated_on }}</li>
+						<li>{{ post.published }}</li>
+					{% endfor %}
+				</ul>
+			{% else %}
+				<p>not list!</p>
+			{% endif %}
+
+			<hr>
+			
+			<h1>Não publicados</h1>
+			{% if unposts %}
+				<ul>
+					{% for post in unposts %}
+						<li><a href="{% url 'delete_post' post.id %}">{{ post.id }}</a>
+						<li>{{ post.category.name }}</li>
+						<li>{{ post.title }}</li>
+						<li>{{ post.text }}</li>
+						<li>{{ post.created_on }}</li>
+						<li>{{ post.updated_on }}</li>
+						<li>{{ post.published }}</li>
+					{% endfor %}
+				</ul>
+			{% else %}
+				<p>not list!</p>
+			{% endif %}
+
+		{% else %}
+			<h1 align="center"><b>unauthenticated user</b></h1>
+		{% endif %}
+	</div><!--main-->
+	
+{% endblock %}

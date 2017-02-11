@@ -1,11 +1,31 @@
-{% extends 'base.html' %}
+{% extends 'login.html' %}
+{% load staticfiles %}
 
-{% block title %}IFPB register{% endblock %}
+{% block title %}IFPB news - register User{% endblock %}
+{% block extrahead %}<link href="{% static 'muralifpb/css/css-for-errors-li.css' %}" rel="stylesheet" type="text/css" media="all">{% endblock %}
 
-{% block content %}
-	<h3>register</h3><a href="/settings">Back to settings</a>
-	<form action="." method="POST" >{% csrf_token %}
-		{{ form.as_p }}
-		<input type="submit" />
-	</form>
+
+
+{% block dashboard_content %}
+	{% if success %}
+		success
+	{% elif form.errors %}
+		{{''}}
+	{% else %}
+		unsucess
+	{% endif %}
+	<div id="main" align="center">
+		{% if request.user.is_authenticated and request.user.is_staff %}
+			<form action="." method="POST" >{% csrf_token %}
+				<div class="block-login">
+					<h2 class="title">Register User</h2>
+					{{ form.as_p }}
+					<input class="button button-color" type="submit" name="Save" value="Save" >
+				</div>
+			</form>
+		{% else %}
+			<h1 align="center"><b>you do not have permission</b></h1>
+		{% endif %}
+	</div>
+
 {% endblock %}
