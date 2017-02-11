@@ -1,0 +1,28 @@
+{% extends 'login.html' %}
+{% load staticfiles %}
+
+{% block title %}IFPB Editar post {{ user.username }} {% endblock %}
+{% block extrahead %}<link href="{% static 'muralifpb/css/css-for-errors-li.css' %}" rel="stylesheet" type="text/css" media="all">{% endblock %}
+
+{% block dashboard_content %}
+	{% if success %}
+		success
+	{% else %}
+		unsucess
+	{% endif %}
+	{% if request.user.is_authenticated %}
+		<form action="." method="POST" >{% csrf_token %}
+			<div class="block-login">
+				<h2 class="title">Change User</h2>
+				{{ form.errors }}
+				{{ form.as_p }}
+				{{ user_form.as_p }}
+				<input class="button button-color" type="submit" name="Sign in" value="Sign in" >
+				<br><br>
+				<a href="{% url 'edit_password' %}">Change Password</a>
+			</div>
+		</form>
+	{% else %}
+		<h1 align="center"><b>unauthenticated user</b></h1>
+	{% endif %}
+{% endblock %}

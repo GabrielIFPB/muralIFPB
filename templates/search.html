@@ -1,22 +1,58 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
 {% block title %}IFPB search {% endblock %}
+{% block extrahead %}<link href="{% static 'muralifpb/css/css-for-errors-li.css' %}" rel="stylesheet" type="text/css" media="all">{% endblock %}
 
 {% block content %}
-<!-- precisa ser editado para pesquisa de usuários -->
-<h1>precisa ser editado para pesquisa de usuários</h1>
-<a href="/settings">Back to settings</a>
-	<form action="." method="POST" >{% csrf_token %}
-		{{ form.as_p }}
-		<input type="submit" />
-	</form>
-	<hr>
-	<h3>Lista de Users</h3>
-	{% if users %}
-		{% for user in users %}
-			<p>{{ user.firstName }} {{ user.lastName }}</p>
-		{% endfor %}
-	{% else %}
-		<p>not list!</p>
-	{% endif %}
+	<style type="text/css">
+		table {
+		    border-collapse: collapse;
+		    width: 100%;
+		}
+
+		th, td {
+		    text-align: left;
+		    padding: 8px;
+		}
+
+		tr:nth-child(even){
+			background-color: #f2f2f2;
+		}
+
+		th {
+		    background-color: #4CAF50;
+		    color: white;
+		}
+	</style>
+	
+	<div id="main">
+		<dir class="div">
+			<h2 class="title">Lista de Users</h2>
+
+			<table >
+				<thead>
+					<tr>
+						<th>Matricula</th> 
+						<th>Name</th>
+						<th>Email</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% if users %}
+						{% for user in users %}
+							<tr>
+								<td><a href="">{{ user.matricula }}</a></td>
+								<td>{{ user.username }}</td>
+								<td>{{ user.email }}</td>
+							</tr>
+						{% endfor %}
+					{% else %}
+						<p>not list!</p>
+					{% endif %}
+				</tbody>
+			</table>
+		</dir>
+	</div>
+	
 {% endblock %}

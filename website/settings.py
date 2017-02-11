@@ -38,6 +38,7 @@ INSTALLED_APPS = (
 	'django.contrib.sessions',
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
+	
 	'muralifpb',
 )
 
@@ -67,6 +68,11 @@ TEMPLATES = [
 				'django.template.context_processors.request',
 				'django.contrib.auth.context_processors.auth',
 				'django.contrib.messages.context_processors.messages',
+
+				'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
 			],
 		},
 	},
@@ -93,9 +99,9 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
-LANGUAGE_CODE = 'pt-BR'
+LANGUAGE_CODE = 'pt-br'
 
-TIME_ZONE = 'America/Sao_Paulo'
+TIME_ZONE = 'America/Fortaleza'
 
 USE_I18N = True
 
@@ -107,5 +113,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
+AUTH_USER_MODEL = 'muralifpb.UserMy'
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
 STATIC_URL = '/static/'
+LOGIN_URL = '/login/'
+LOGOUT_URL = '/exit/'
+LOGIN_REDIRECT_URL = '/'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+STATICFILES_DIRS = (
+   ('muralifpb', os.path.join(BASE_DIR, 'templates/static')),
+)

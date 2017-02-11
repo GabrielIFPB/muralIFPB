@@ -1,0 +1,61 @@
+{% load staticfiles %}
+
+
+<style type="text/css">
+	p {
+		font-weight: 900;
+		line-height: 1.1;
+	}
+</style>
+
+<dir id="right" class="floating-right" style=" overflow: auto;">
+	<h6>Alunos</h6>
+	<ul style="margin-top: 5px; ">
+		{% for post in posts %}
+			{% if not post.author.is_reitoria %}
+				<dir style="background: rgba(179,255,206,0.17); list-style-type: none; margin-left: 3px; margin-right: 3px; border-radius: 5px; border: 1px solid rgba(6, 72, 3, 0.28); margin-top: 3px; margin-bottom: 3px;">
+					{% if post.author.image %}
+						<li style="font-weight: 900;">
+							<img src="{ post.author.image.url }" style="margin-right: 0px; float: ;" />
+							<dir style="margin-right: 0px; margin-top: 0px; " >
+								<p>{{ post.author.username|capfirst }} {{ post.created_on }}</p>
+							</dir>
+						</li>
+					{% else %}
+						<li>
+							<dir style="margin-top: 0px; display: block;">
+								<img src="{% static 'muralifpb/img/ic_person_black_48dp_1x.png' %}" 
+									style="margin-left: 5px; float: left; display: inline; margin-top: 0px; margin-bottom: 3px;" 
+								/>
+							</dir>
+							<dir style="margin-right: 0px; display: block; margin-left: 10px; margin-top: 10px;" >
+								{{ post.author.username|capfirst }} 
+								<dir style="display: block; margin-top: 8px; margin-bottom: 5px; opacity: 0.50;">
+									<p style="font-size: 10px;">{{ post.created_on }}</p>
+								</dir>
+							</dir>
+						</li>
+					{% endif %}
+					<li style="margin-left: 155px; margin-bottom: 0px;">
+						{{ post.title|title }}
+					</li>
+					<li style="margin-left: 15px; margin-top: 15px; color: #191970; ">
+						<dir style="font-weight: 900; display: inline; ">
+							{{ post.text|capfirst|addslashes|linebreaks }}
+						</dir>
+					</li>
+					{% if post.image %}
+						<li>
+							<a href="{{ post.image.url }}">
+								<img src="{{ post.image.url }}" 
+									style="margin-left: 5px; margin-top: 3px;  max-width: 97%; max-height: 40%; width: auto; height: auto;" 
+								/>
+							</a>
+						</li>
+					{% endif %}
+					<br>
+				</dir>
+			{% endif %}
+		{% endfor %}
+	</ul>
+</dir>

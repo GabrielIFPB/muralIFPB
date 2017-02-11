@@ -1,0 +1,14 @@
+{% extends 'login.html' %}
+
+{% block title %}IFPB Editar post {{ post.title }} {{ post.author.user.username }}{% endblock %}
+
+{% block dashboard_content %}
+
+	<div id="main">
+		<form action="." method="POST" >{% csrf_token %}
+			{{ form.as_p }}
+			<input type="submit" />
+		</form>
+	</div>
+	
+{% endblock %}
