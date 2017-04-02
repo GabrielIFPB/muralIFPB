@@ -14,21 +14,23 @@ Including another URLconf
 	1. Add an import:  from blog import urls as blog_urls
 	2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
-from django.conf.urls import include, url
+from django.conf.urls import url, include
 from django.contrib import admin
-
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth.views import login
+from django.contrib.auth.views import logout
 
 urlpatterns = [
-	url(r'^', include('muralifpb.urls')),
+	url(r'^mural/', include('muralifpb.urls', namespace='mural')),
 
-	url(r'^login/$', 'django.contrib.auth.views.login', {'template_name' : 'login.html'}, name='login'),
+	url(r'^login/$', login, {'template_name' : 'login.html'}, name='login'),
 
-	url(r'^exit/$', 'django.contrib.auth.views.logout', {'template_name' : 'index.html'}, name='index'),
+	url(r'^exit/$', logout, {'template_name' : 'index.html'}, name='index'),
 
 	url(r'^admin/', include(admin.site.urls)),
 ]
 
 if settings.DEBUG:
+	urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 	urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
