@@ -26,11 +26,9 @@ def index(request):
 
 @login_required
 def account(request):
-	posts = Post.published_objects.filter(author_id=request.user.id)
-	unposts = Post.unpublished_objects.filter(author_id=request.user.id)
 	context = {
-			'posts' : posts,
-			'unposts': unposts,
+			'posts' : Post.unpublished_objects.filter(author_id=request.user.id),
+			'unposts': Post.published_objects.filter(author_id=request.user.id),
 		}
 	return render(request, 'account.html', context)
 
