@@ -1,0 +1,73 @@
+{% load staticfiles %}
+{% load mural_tags %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title>{% block title %}{% endblock %}</title>
+		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css" media="all">
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>]
+
+		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+		<!-- <link href="{% static 'muralifpb/css/my-style.css' %}" rel="stylesheet" type="text/css" media="all"> -->
+		<link rel="shortcut icon" href="{% static 'muralifpb/img/favicon.ico' %}" type="image/x-icon" />
+		{% block extrahead %}{% endblock %}
+		{% block extrajs %}{% endblock %}
+	</head>
+	<body>
+		<div id="header">
+			<div id="box-header">
+				<div id="logo-if">
+					<a href="/"></a>
+				</div><!--logo-if-->
+				
+				<div >
+					{% if request.user.is_authenticated %}
+						{% if request.user.is_staff %}
+							{{ request.user.username }} Admin
+						{% else %}
+							{{ request.user.username }} Estudante
+						{% endif %}
+					{% else %}
+						<b>IFPB news</b>
+					{% endif %}
+				</div><!--search-->
+
+				<ul class="menu">
+					{% if request.user.is_authenticated %}
+						<li><a href="#"><img src="{% static 'muralifpb/img/ic_settings_black_24dp_2x.png' %}" alt="Opções" style=" display: inline; width: 35px; height: 35px;" /></a>
+							<ul>
+								<li><a href="{% url 'edit_user' %}" >Perfil</a></li>
+								{% if request.user.is_staff %}
+									<li><a href="{% url 'register' %}">Cadastrar</a></li>
+									<li><a href="{% url 'search' %}">Search</a></li>
+								{% endif %}
+								<li><a href="{% url 'account' %}">account</a></li>
+								<li><a href="{% url 'index' %}">Exit</a></li>
+							</ul>
+						</li>
+					{% else %}
+						<li><a href="{% url 'login' %}">Logar</a></li>
+					{% endif %}
+				</ul>
+
+				
+			</div><!--box-header-->
+		</div><!--header-->
+		
+		{% block content %}
+
+		{% endblock %}
+	
+		<div id="footer">
+			<div id="credits" align="center">
+				<p>Desenvolvido Jerônimo Gabriel</p>
+			</div><!--credits-->
+		</div><!--footer-->
+	</body>
+</html>
