@@ -38,25 +38,23 @@
 					{% endif %}
 				</div><!--search-->
 
-				
-
-					<ul class="menu">
-						{% if request.user.is_authenticated %}
-							<li><a href="#"><img src="{% static 'muralifpb/img/ic_settings_black_24dp_2x.png' %}" alt="Opções" style=" display: inline; width: 35px; height: 35px;" /></a>
-								<ul>
-									<li><a href="{% url 'edit_user' %}" >Perfil</a></li>
-									{% if request.user.is_staff %}
-										<li><a href="{% url 'register' %}">Cadastrar</a></li>
-										<li><a href="{% url 'search' %}">Search</a></li>
-									{% endif %}
-									<li><a href="{% url 'account' %}">account</a></li>
-									<li><a href="{% url 'index' %}">Exit</a></li>
-								</ul>
-							</li>
-						{% else %}
-							<li><a href="{% url 'login' %}">Logar</a></li>
-						{% endif %}
-					</ul>
+				<ul class="menu">
+					{% if request.user.is_authenticated %}
+						<li><a href="#"><img src="{% static 'muralifpb/img/ic_settings_black_24dp_2x.png' %}" alt="Opções" style=" display: inline; width: 35px; height: 35px;" /></a>
+							<ul>
+								<li><a href="{% url 'edit_user' %}" >Perfil</a></li>
+								{% if request.user.is_staff %}
+									<li><a href="{% url 'register' %}">Cadastrar</a></li>
+									<li><a href="{% url 'search' %}">Search</a></li>
+								{% endif %}
+								<li><a href="{% url 'account' %}">account</a></li>
+								<li><a href="{% url 'index' %}">Exit</a></li>
+							</ul>
+						</li>
+					{% else %}
+						<li><a href="{% url 'login' %}">Logar</a></li>
+					{% endif %}
+				</ul>
 
 				
 			</div><!--box-header-->
