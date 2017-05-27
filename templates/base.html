@@ -2,7 +2,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0" media="all"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" media="all"/>
+
+	<!-- <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0" media="all"/> -->
 	<link rel="shortcut icon" href="{% static 'muralifpb/img/favicon.ico' %}" type="image/x-icon" />
 	<title></title>
 	<!-- Compiled and minified CSS -->
@@ -18,7 +21,24 @@
 		<div class="nav-wrapper green z-depth-4 white-text text-darken-2">
 			<a class="brand-logo logo" href="/"><img class="responsive-img" src="{% static 'muralifpb/img/logo-conexao-map.png' %}" /></a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li><a href="#">Log in</a></li>
+				{% if request.user.is_authenticated %}
+					{% if request.user.is_staff %}
+						<li><a class="dropdown-button" href="#!" data-activates="dropdown1">{{ request.user.username }} Admin<i class="material-icons right">arrow_drop_down</i></a></li>
+						<ul id="dropdown1" class="dropdown-content drop-mrc-1">
+							<li><a href="{% url 'mural:edit_user' %}" >Perfil</a></li>
+							{% if request.user.is_staff %}
+								<li><a href="{% url 'mural:register' %}">Cadastrar</a></li>
+							{% endif %}
+							<li><a href="{% url 'mural:account' %}">account</a></li>
+							<li><a href="{% url 'mural:index' %}">Exit</a></li>
+						</ul>
+					{% else %}
+						<li>{{ request.user.username }} Estudante</li>
+					{% endif %}
+				{% else %}
+					<li><b>IFPB news</b></li>
+					<li><a href="{% url 'login' %}">Log in</a></li>
+				{% endif %}
 			</ul>
 		</div>
 	</nav>

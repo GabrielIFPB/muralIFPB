@@ -1,7 +1,8 @@
 # -*- coding: UTF-8 -*-
 from django.db import models
 from django.core import validators
-from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser, PermissionsMixin, UserManager)
+from django.contrib.auth.models import (AbstractBaseUser, PermissionsMixin, UserManager)
+from django.utils.translation import ugettext_lazy as _
 
 import re
 
@@ -64,7 +65,7 @@ class UserMy(AbstractBaseUser, PermissionsMixin):
 	USERNAME_FIELD = 'username'
 	REQUIRED_FIELDS = ['email']
 
-	def __unicode__(self):
+	def __str__(self):
 		return  self.name or self.username
 
 	def get_short_name(self):
