@@ -4,38 +4,41 @@
 {% block title %}IFPB login{% endblock %}
 {% block extrahead %}<link href="{% static 'muralifpb/css/css-for-errors-li.css' %}" rel="stylesheet" type="text/css" media="all">{% endblock %}
 <style type="text/css">
-.container-login{
-	max-width: 400px;
-}
-.form-login {
-	background: rgba(255,255,255, 0.9);
-	border-radius: 4px;
-	box-shadow: 1px 1px 12px #333;
-	padding: 5px 10px;
+.card {
+	position: inherit;
+	left: 50%;
+	top: 0%;
+	-moz-transform: translate(-50%, -50%)
+	-webkit-transform: translate(-50%, -50%)
+	-ms-transform: translate(-50%, -50%)
+	-o-transform: translate(-50%, -50%)
+	transform: translate(-50%, -50%);
 }
 </style>
 {% block content %}
 <div class="section no-pad-bot">
-	<div class="container container-login">
-		<div class="row center form-login">
-			<form action="." method="POST" class="col s12">{% csrf_token %}
-				<h2 class="title">Login</h2>
-				{{ form.non_field_errors }}
+	<div class="container">
+		<div class="row">
+			<form action="." method="POST" class="col center-align s12">{% csrf_token %}
 				<div class="row">
-					<div class="input-field col s6 black-text">
-						{{ form.username }}
-						<label for="username">{{ form.username.label }}</label>
+					<h3 class="title">Login</h3>
+					<div class="col s6 offset-s3 card">
+						{{ form.non_field_errors }}
+						<div class="row">
+							<div class="input-field col s12 black-text">
+								{{ form.username }}
+								<label for="username">{{ form.username.label }}</label>
+							</div>
+						</div>
+						<br >
+						<div class="row">
+							<div class="input-field col s12 black-text">
+								{{ form.password }}
+								<label for="username">{{ form.password.label }}</label>
+							</div>
+						</div>
+						<button class="waves-effect waves-light btn">login</button>
 					</div>
-				</div>
-				<br >
-				<div class="row">
-					<div class="input-field col s6 black-text">
-						{{ form.password }}
-						<label for="username">{{ form.password.label }}</label>
-					</div>
-				</div>
-				<div class="block-login">
-					<input class="button button-color" type="submit" name="Sign in" value="Sign in" >
 				</div>
 			</form>
 		</div>

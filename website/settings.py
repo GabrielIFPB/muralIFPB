@@ -119,7 +119,7 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 STATIC_URL = '/static/'
 LOGIN_URL = '/login/'
-LOGOUT_URL = '/exit/'
+LOGOUT_URL = '/mural/'
 LOGIN_REDIRECT_URL = '/mural/'
 
 MEDIA_URL = '/media/'

@@ -11,7 +11,7 @@ delete_post,
 add_portal,
 edit_portal,
 delete_portal,
-exit,)
+)
 
 urlpatterns = [#'muralifpb.views', #prefixo
 

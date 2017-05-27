@@ -4,8 +4,6 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" media="all"/>
-
-	<!-- <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0" media="all"/> -->
 	<link rel="shortcut icon" href="{% static 'muralifpb/img/favicon.ico' %}" type="image/x-icon" />
 	<title></title>
 	<!-- Compiled and minified CSS -->
@@ -30,7 +28,7 @@
 								<li><a href="{% url 'mural:register' %}">Cadastrar</a></li>
 							{% endif %}
 							<li><a href="{% url 'mural:account' %}">account</a></li>
-							<li><a href="{% url 'mural:index' %}">Exit</a></li>
+							<li><a href="{% url 'logout' %}">Exit</a></li>
 						</ul>
 					{% else %}
 						<li>{{ request.user.username }} Estudante</li>
