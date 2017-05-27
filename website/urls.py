@@ -26,7 +26,7 @@ urlpatterns = [
 
 	url(r'^login/$', login, {'template_name' : 'login.html'}, name='login'),
 
-	url(r'^exit/$', logout, {'template_name' : 'index.html'}, name='index'),
+	url(r'^exit/$', logout, {'template_name' : 'index.html'}, name='logout'),
 
 	url(r'^admin/', include(admin.site.urls)),
 ]

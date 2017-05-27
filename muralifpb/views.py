@@ -215,6 +215,6 @@ def delete_portal(request, id):
 	portal.delete()
 	return HttpResponseRedirect(reverse('add_portal'))
 
-@login_required
+# @login_required
 def exit(request):
 	logout(request)
