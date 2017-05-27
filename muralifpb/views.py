@@ -22,7 +22,8 @@ from muralifpb.models import NewsPortals
 from muralifpb.form import NewsPortalsForm
 
 def index(request):
-	return render(request, 'index.html', { })
+	print(request)
+	return render(request, 'index.html', {})
 
 @login_required
 def account(request):
@@ -60,7 +61,7 @@ def edit_password(request):
 
 @login_required
 def edit_user(request):
-	user = get_object_or_404(UserMy, id=request.user.id)
+	user = get_object_or_404(UserMy, pk=request.user.id)
 	context = {}
 	if request.method == 'POST' and request.user.is_authenticated():
 		form = UserForm(request.POST, instance=user)

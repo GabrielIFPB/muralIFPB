@@ -3,20 +3,68 @@
 
 {% block title %}IFPB login{% endblock %}
 {% block extrahead %}<link href="{% static 'muralifpb/css/css-for-errors-li.css' %}" rel="stylesheet" type="text/css" media="all">{% endblock %}
-
+<style type="text/css">
+.container-login{
+	max-width: 400px;
+}
+.form-login {
+	background: rgba(255,255,255, 0.9);
+	border-radius: 4px;
+	box-shadow: 1px 1px 12px #333;
+	padding: 5px 10px;
+}
+</style>
 {% block content %}
-	
-	<div id="main" align="center">
-		{% block dashboard_content %}
-			<form action="." method="POST" >{% csrf_token %}
+<div class="section no-pad-bot">
+	<div class="container container-login">
+		<div class="row center form-login">
+			<form action="." method="POST" class="col s12">{% csrf_token %}
+				<h2 class="title">Login</h2>
+				{{ form.non_field_errors }}
+				<div class="row">
+					<div class="input-field col s6 black-text">
+						{{ form.username }}
+						<label for="username">{{ form.username.label }}</label>
+					</div>
+				</div>
+				<br >
+				<div class="row">
+					<div class="input-field col s6 black-text">
+						{{ form.password }}
+						<label for="username">{{ form.password.label }}</label>
+					</div>
+				</div>
 				<div class="block-login">
-					<h2 class="title">Login</h2>
-					{{ form.non_field_errors }}
-					{{ form.as_p }}
 					<input class="button button-color" type="submit" name="Sign in" value="Sign in" >
 				</div>
 			</form>
-		{% endblock %}
+		</div>
 	</div>
-
+</div>
+<!-- <div class="container container-apps ">
+<div class="row col s6 center-align"">
+{% block dashboard_content %}
+	<form action="." method="POST" class="col s12 center-align">{% csrf_token %}
+		<h2 class="title">Login</h2>
+		{{ form.non_field_errors }}
+		<div class="row col s12">
+			<div class="input-field col s6 black-text center-align"">
+				{{ form.username }}
+				<label for="username">{{ form.username.label }}</label>
+			</div>
+		</div>
+		<br >
+		<div class="row">
+			<div class="input-field col s6 black-text">
+				{{ form.password }}
+				<label for="username">{{ form.password.label }}</label>
+			</div>
+		</div>
+		<div class="block-login">
+			<input class="button button-color" type="submit" name="Sign in" value="Sign in" >
+		</div>
+	</form>
+{% endblock %}
+</div>
+</div> -->
 {% endblock %}

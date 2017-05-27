@@ -1,0 +1,19 @@
+.responsive-img:hover{
+	background:url('../img/logo-conexao-map-hover.png') no-repeat center;
+}
+.logo{
+	margin: 8px 0px 0px 10px;
+}
+.chat-students{
+	margin: 0px 0px 0px 0px;
+	height: 502px;
+	border-right: 3px solid #1F6012;
+}
+.news{
+	height: 502px;
+	border-right: 3px solid #1F6012;
+}
+.chat-rectory{
+	height: 502px;
+	margin: 0px 0px 0px 0px;
+}
