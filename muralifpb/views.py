@@ -71,6 +71,7 @@ def edit_user(request):
 	else:
 		form = UserForm(instance=user)
 	context['form'] = form
+	print(context)
 	return render(request, 'edit_user.html', context)
 
 @login_required
