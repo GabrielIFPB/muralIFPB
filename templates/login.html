@@ -3,18 +3,7 @@
 
 {% block title %}IFPB login{% endblock %}
 {% block extrahead %}<link href="{% static 'muralifpb/css/css-for-errors-li.css' %}" rel="stylesheet" type="text/css" media="all">{% endblock %}
-<style type="text/css">
-.card {
-	position: inherit;
-	left: 50%;
-	top: 0%;
-	-moz-transform: translate(-50%, -50%)
-	-webkit-transform: translate(-50%, -50%)
-	-ms-transform: translate(-50%, -50%)
-	-o-transform: translate(-50%, -50%)
-	transform: translate(-50%, -50%);
-}
-</style>
+
 {% block content %}
 <div class="section no-pad-bot">
 	<div class="container">
@@ -24,20 +13,20 @@
 					<h3 class="title">Login</h3>
 					<div class="col s6 offset-s3 card">
 						{{ form.non_field_errors }}
-						<div class="row">
+						<div class="row" style="padding: 15px;">
 							<div class="input-field col s12 black-text">
 								{{ form.username }}
 								<label for="username">{{ form.username.label }}</label>
 							</div>
 						</div>
 						<br >
-						<div class="row">
+						<div class="row" style="padding-right: 15px; padding-left: 15px;">
 							<div class="input-field col s12 black-text">
 								{{ form.password }}
 								<label for="username">{{ form.password.label }}</label>
 							</div>
 						</div>
-						<button class="waves-effect waves-light btn">login</button>
+						<button style="margin: 15px;" class="waves-effect waves-light btn">login</button>
 					</div>
 				</div>
 			</form>
