@@ -1,12 +1,10 @@
-{% extends 'login.html' %}
+{% extends 'base.html' %}
 {% load staticfiles %}
 
 {% block title %}IFPB news - register User{% endblock %}
 {% block extrahead %}<link href="{% static 'muralifpb/css/css-for-errors-li.css' %}" rel="stylesheet" type="text/css" media="all">{% endblock %}
 
-
-
-{% block dashboard_content %}
+{% block content %}
 	{% if success %}
 		success
 	{% elif form.errors %}
@@ -20,6 +18,7 @@
 				<div class="block-login">
 					<h2 class="title">Register User</h2>
 					{{ form.as_p }}
+					{{ user_form.as_p }}
 					<input class="button button-color" type="submit" name="Save" value="Save" >
 				</div>
 			</form>

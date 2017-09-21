@@ -7,22 +7,17 @@
 {% block content %}
 	<div class="row">
 
-		{% show_posts_reitoria %}
+		{% show_posts %}
 
-		<div class="col s12 m6 l6 news ">
+		<div class="col s3 news white ">
 			<h5 class="center-align">Notícias</h5>
 			<blockquote class="" >
 				This is an example quotation that uses the blockquote tag.
 			</blockquote>
 		</div>
 
-		{% show_posts %}
-
-		<div id="main">
-			<a href="{% static 'muralifpb/img/search-submit.png' %}">download img</a>
-			<br>
-			{% show_news %}
-		</div> -->		
+		{% show_posts_reitoria %}
+ 		
 	</div>
 	<script type="text/javascript" src="{% static 'muralifpb/js/index.js' %}"></script>
 {% endblock %}

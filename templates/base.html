@@ -16,8 +16,8 @@
 </head>
 <body>
 	<nav>
-		<div class="nav-wrapper green z-depth-4 white-text text-darken-2">
-			<a class="brand-logo logo" href="/"><img class="responsive-img" src="{% static 'muralifpb/img/logo-conexao-map.png' %}" /></a>
+		<div class="nav-wrapper green z-depth-1 white-text text-darken-2">
+			<a class="brand-logo center logo" href="{% url 'mural:index' %}"><img class="responsive-img" src="{% static 'muralifpb/img/logo-conexao-map.png' %}" /></a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
 				{% if request.user.is_authenticated %}
 					{% if request.user.is_staff %}

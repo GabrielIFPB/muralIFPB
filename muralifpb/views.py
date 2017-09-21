@@ -22,7 +22,6 @@ from muralifpb.models import NewsPortals
 from muralifpb.form import NewsPortalsForm
 
 def index(request):
-	print(request)
 	return render(request, 'index.html', {})
 
 @login_required
@@ -43,7 +42,9 @@ def register(request):
 			context['success'] = True
 	else:
 		form = UserStudentForm()
+		form_user = UserForm()
 	context['form'] = form
+	context['user_form'] = form_user
 	return render(request, 'register.html', context)
 
 @login_required
@@ -71,7 +72,6 @@ def edit_user(request):
 	else:
 		form = UserForm(instance=user)
 	context['form'] = form
-	print(context)
 	return render(request, 'edit_user.html', context)
 
 @login_required

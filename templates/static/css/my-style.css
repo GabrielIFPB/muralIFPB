@@ -1,23 +1,43 @@
+body{background-color: #DEDEDE;}
+nav{}
+footer{margin: 0;}
 .responsive-img:hover{
 	background:url('../img/logo-conexao-map-hover.png') no-repeat center;
 }
 .logo{
 	margin: 8px 0px 0px 10px;
 }
+.top3em{margin-top: 3em;}
+
 .chat-students{
-	margin: 0px 0px 0px 0px;
-	height: 502px;
+	margin-top: 3em;
+	/*margin-left: 1em !important;*/
+	height: 35em;
+	/*height: 502px;*/
 	border-right: 3px solid #1F6012;
+	border-radius: 7px;
 }
 .news{
-	height: 502px;
+	margin-top: 5.3em;
+	margin-left: 1em !important;
+	height: 35em;
 	border-right: 3px solid #1F6012;
+	border-radius: 7px;
 }
 .chat-rectory{
-	height: 502px;
-	margin: 0px 0px 0px 0px;
+	margin-top: 5.3em;
+	margin-left: 1em !important;
+	height: 35em;
+	/*height: 502px;*/
+	border-right: 3px solid #1F6012;
+	border-radius: 7px;
 }
-
+.title-chat-stude{width: 5.5em; margin-left: 2em; margin-bottom: 0px; margin-right: 0px; padding-right: 0; margin-top: -20px;}
+.title-chat-restory{
+	width: 5.5em; 
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+}
 /* box da tela de login */
 .card {
 	position: inherit;
